@@ -1,20 +1,16 @@
-<script setup></script>
-
 <template>
-  <div>Coming soon</div>
+  <div>
+    <h1>Coming soon</h1>
+    <Sacha />
+  </div>
 </template>
 
+<script setup>
+import Sacha from "./components/SachaSvg.vue";
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+h1 {
+  margin-bottom: -5vh;
 }
 </style>
