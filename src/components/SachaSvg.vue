@@ -1,8 +1,6 @@
 <template>
   <div
     :style="{
-      width: '50vh',
-      height: '50vh',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -86,7 +84,7 @@
                 d="m 0,0 -36.766,-161.009 -26.982,-42.736 v -59.67 l 51.933,-65.896 c 0,0 66.964,-137.405 184.921,-144.558 117.957,-7.152 180.766,176.678 180.766,176.678 l 27.575,33.776 7.413,49.084 -32.964,43.404 -0.492,109.65 -108.739,94.979 z"
                 style="
                   fill: #ffffff;
-                  fill-opacity: 1;
+                  fill-opacity: 0.9;
                   fill-rule: nonzero;
                   stroke: none;
                 "
@@ -259,11 +257,12 @@
 }
 
 .fill-dark {
-  fill: #000;
+  fill: #18b880;
 }
 
 .fill-light {
-  fill: #191919;
+  fill: #18b880;
+  opacity: 0.5;
 }
 
 .grow {
