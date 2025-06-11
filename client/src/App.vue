@@ -2,22 +2,26 @@
   <div id="main-layout">
     <div class="side left"></div>
     <div class="center">
-      <h1 @click="isWalking = !isWalking">Coming soon</h1>
+      <!-- <h1 @click="isWalking = !isWalking">Coming soon</h1> -->
       <div>
         <SachaCartoonArmsCrossed v-if="!isWalking" style="height: 50vh" />
         <SachaWalking style="height: 48vh" v-else />
       </div>
     </div>
     <div class="side right"><QrCode /></div>
-    <a
+    <!-- <a
       class="bottom"
       href="/assets/Sacha-David-Resume.pdf"
       download="Sacha-David-Resume.pdf"
-    >
+    > -->
+    <div class="bottom">
       <div>SACHA DAVID</div>
       <div class="subtitle">Fullstack Developer</div>
       <!-- <div class="download-text">Download Resume</div> -->
-    </a>
+
+      <SachaCv />
+    </div>
+    <!-- </a> -->
   </div>
 </template>
 
@@ -28,6 +32,7 @@ import { ref } from "vue";
 import QrCode from "./components/QrCode.vue";
 import SachaCartoonArmsCrossed from "./components/SachaCartoonArmsCrossed.vue";
 import SachaWalking from "./components/SachaWalking.vue";
+import SachaCv from "./components/SachaCv.vue";
 
 const isWalking = ref(false);
 </script>
@@ -44,7 +49,7 @@ const isWalking = ref(false);
   grid-template-areas:
     "side-left center side-right"
     "bottom bottom bottom";
-  overflow: hidden;
+  // overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 

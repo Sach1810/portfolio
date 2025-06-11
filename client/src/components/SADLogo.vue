@@ -1,8 +1,6 @@
 <template>
   <div class="logo-container">
-    <Sacha style="width: 70px; height: 70px" /><span class="logo-text"
-      >SAD</span
-    >
+    <Sacha style="width: 70px; height: 70px" />
   </div>
 </template>
 
