@@ -2,33 +2,37 @@
   <div id="main-layout">
     <div class="side left"></div>
     <div class="center">
-      <h1>Coming soon</h1>
-      <SachaCartoonArmsCrossed />
+      <h1 @click="isWalking = !isWalking">Coming soon</h1>
+      <div>
+        <SachaCartoonArmsCrossed v-if="!isWalking" style="height: 50vh" />
+        <SachaWalking style="height: 48vh" v-else />
+      </div>
     </div>
-    <div class="side right"><QrCode /><SachaWalking /></div>
+    <div class="side right"><QrCode /></div>
     <a
       class="bottom"
       href="/assets/Sacha-David-Resume.pdf"
       download="Sacha-David-Resume.pdf"
     >
-      <!-- <div class="bottom"> -->
       <div>SACHA DAVID</div>
       <div class="subtitle">Fullstack Developer</div>
       <!-- <div class="download-text">Download Resume</div> -->
-      <!-- </div> -->
     </a>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 //TODO sacha move grid to a layout and use slots to put data inside
 // import Sad from "./components/SADLogo.vue";
 import QrCode from "./components/QrCode.vue";
 import SachaCartoonArmsCrossed from "./components/SachaCartoonArmsCrossed.vue";
 import SachaWalking from "./components/SachaWalking.vue";
+
+const isWalking = ref(false);
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #main-layout {
   max-width: 1200px;
   min-width: 90dvw;

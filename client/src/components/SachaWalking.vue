@@ -1,7 +1,7 @@
 <template>
-  <div class="walk-wrapper">
-    <component :is="currentComponent" style="height: 300px" />
-  </div>
+  <!-- <div class="walk-wrapper"> -->
+  <component :is="currentComponent" />
+  <!-- </div> -->
 </template>
 
 <script setup>
@@ -42,6 +42,6 @@ start();
 }
 
 .walk-wrapper .walk-svg {
-  height: 100px;
+  height: 500px;
 }
 </style>
