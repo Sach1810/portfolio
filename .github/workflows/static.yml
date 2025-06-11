@@ -40,8 +40,9 @@ jobs:
         with:
           node-version: lts/*
           cache: "npm"
+          cache-dependency-path: client/package-lock.json
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Build
         run: npm run build
       - name: Setup Pages
