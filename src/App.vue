@@ -3,6 +3,7 @@
     <div class="side left"></div>
     <div class="center">
       <h1>Coming soon</h1>
+      <SachaCartoonArmsCrossed />
       <Sacha />
     </div>
     <div class="side right"></div>
@@ -23,6 +24,7 @@
 <script setup>
 //TODO sacha move grid to a layout and use slots to put data inside
 // import Sad from "./components/SADLogo.vue";
+import SachaCartoonArmsCrossed from "./components/SachaCartoonArmsCrossed.vue";
 </script>
 
 <style scoped>
@@ -45,6 +47,7 @@ h1 {
   letter-spacing: 15px;
   text-wrap: nowrap;
   position: absolute;
+  font-size: 100px;
 }
 
 .side .left {
@@ -73,7 +76,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 60px;
   color: var(--c1);
   cursor: pointer;
   transition: all 0.3s ease;
