@@ -3,7 +3,6 @@ node_modules
 vetur.config.js
 /coverage
 /dist
-package-lock.json
 
 # local env files
 .env.local
