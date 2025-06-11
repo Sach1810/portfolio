@@ -12,6 +12,7 @@
   --c1: #0f0f0f;
   --c2: #131313;
   --c3: #1e1e1e;
+  --hc1: hsl(178deg 90% 38%);
 }
 
 @font-face {
@@ -96,7 +97,8 @@
 #app {
   min-height: 100dvh;
   min-width: 100dvw;
-  background: var(--c1);
+  /* background: var(--c1); */
+    background: #fefefe;
   padding: 5dvh 5dvw;
   font-family: "Kodchasan", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }

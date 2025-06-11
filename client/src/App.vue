@@ -4,9 +4,8 @@
     <div class="center">
       <h1>Coming soon</h1>
       <SachaCartoonArmsCrossed />
-      <Sacha />
     </div>
-    <div class="side right"></div>
+    <div class="side right"><QrCode /><SachaWalking /></div>
     <a
       class="bottom"
       href="/assets/Sacha-David-Resume.pdf"
@@ -24,7 +23,9 @@
 <script setup>
 //TODO sacha move grid to a layout and use slots to put data inside
 // import Sad from "./components/SADLogo.vue";
+import QrCode from "./components/QrCode.vue";
 import SachaCartoonArmsCrossed from "./components/SachaCartoonArmsCrossed.vue";
+import SachaWalking from "./components/SachaWalking.vue";
 </script>
 
 <style scoped>
@@ -50,13 +51,15 @@ h1 {
   font-size: 100px;
 }
 
-.side .left {
+.side {
   background: var(--c2);
+}
+
+.side .left {
   grid-area: side-left;
 }
 
 .side .right {
-  background: var(--c2);
   grid-area: side-right;
 }
 .center {
