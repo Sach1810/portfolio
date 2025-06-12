@@ -4,15 +4,15 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-
   --c1: #0f0f0f;
   --c2: #131313;
   --c3: #1e1e1e;
   --hc1: hsl(178deg 90% 38%);
+
+  color: var(--c1);
 }
 
 @font-face {
@@ -99,7 +99,7 @@
   min-width: 100dvw;
   /* background: var(--c1); */
   background: #fefefe;
-  padding: 5dvh 5dvw;
+  padding: 0;
   font-family: "Kodchasan", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
