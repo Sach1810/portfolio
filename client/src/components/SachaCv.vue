@@ -37,7 +37,7 @@
 // import { ref, nextTick } from "vue";
 // import html2pdf from "html2pdf.js";
 import sadIcon from "../assets/SADIcon.png";
-import SectionTitle from "./cv/SectionTitle.vue";
+import SectionTitle from "./cv/ContentSection.vue";
 import { PhDevices } from "@phosphor-icons/vue";
 
 // const pdfContent = ref(null);

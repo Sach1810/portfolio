@@ -1,6 +1,8 @@
 <template>
-  <button @click="downloadPDF">Download PDF</button>
-  <CvTest @pdfContent="pdfContent = $event" ref="pdfContent" />
+  <div>
+    <button @click="downloadPDF">Download PDF</button>
+    <CvTest @pdfContent="pdfContent = $event" ref="pdfContent" />
+  </div>
   <!-- <SachaCv @pdfContent="pdfContent = $event" ref="pdfContent" /> -->
 </template>
 
@@ -8,35 +10,38 @@
 // import SachaCv from "../components/SachaCv.vue";
 import CvTest from "../components/cv/TestCv.vue";
 import { ref, nextTick } from "vue";
-import html2pdf from "html2pdf.js";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const pdfContent = ref(null);
 async function downloadPDF() {
-  console.log("Downloading PDF...");
   await nextTick();
-  console.log("content", pdfContent.value);
-  const element = pdfContent.value;
-  if (!element) return alert("No content found");
+  const el = pdfContent.value;
+  if (!el) return alert("No content to export.");
 
-  html2pdf()
-    .set({
-      margin: 0,
-      filename: "sacha_david_cv.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        scrollY: 0,
-        windowHeight: 1122, // 297mm at 96 DPI
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait",
-      },
-    })
-    .from(element)
-    .save();
+  const canvas = await html2canvas(el, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: null,
+  });
+
+  const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+  const pdf = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4",
+  });
+
+  const pageWidth = 210; // A4 width in mm
+  const pageHeight = 297; // A4 height in mm
+
+  const imgProps = pdf.getImageProperties(imgData);
+  const imgWidth = pageWidth;
+  const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+  pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
+  pdf.save("sacha_david_cv.pdf");
 }
 </script>
 
