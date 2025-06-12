@@ -2,7 +2,7 @@
   <div id="main-layout">
     <div class="side left"></div>
     <div class="center">
-      <!-- <h1 @click="isWalking = !isWalking">Coming soon</h1> -->
+      <h1 @click="isWalking = !isWalking">Coming soon</h1>
       <div>
         <SachaCartoonArmsCrossed v-if="!isWalking" style="height: 50vh" />
         <SachaWalking style="height: 48vh" v-else />
