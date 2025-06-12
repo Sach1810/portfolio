@@ -55,19 +55,27 @@ h1 {
   text-wrap: nowrap;
   position: absolute;
   font-size: 100px;
+  color: #fff;
 }
 
 .side {
   background: var(--c2);
 }
 
-.side .left {
-  grid-area: side-left;
+.side {
+  &.left {
+    grid-area: side-left;
+  }
 }
 
-.side .right {
-  grid-area: side-right;
+.side {
+  &.right {
+    grid-area: side-right;
+    height: 100%;
+    padding-top: 30px;
+  }
 }
+
 .center {
   background: var(--c3);
   grid-area: center;
