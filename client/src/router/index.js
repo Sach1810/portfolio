@@ -1,4 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHashHistory,
+  // createWebHistory
+} from "vue-router";
 import Home from "../pages/HomePage.vue";
 import About from "../pages/AboutPage.vue";
 import SachaCv from "../pages/CvPage.vue";
@@ -10,7 +14,8 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
 });
 
