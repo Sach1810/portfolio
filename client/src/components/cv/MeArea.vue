@@ -1,6 +1,8 @@
 <template>
   <section class="me">
-    <img :src="sadIcon" alt="Sacha David Logo" style="width: 120px" />
+    <div class="logo-wrapper flex-center">
+      <img :src="sadIcon" alt="Sacha David Logo" class="logo" />
+    </div>
     <div class="name-wrapper flex-center">
       <div class="first-wrapper">
         <hr />
@@ -9,8 +11,8 @@
       </div>
       <span class="last">DAVID</span>
     </div>
-    <div class="role-wrapper flex-center">
-      <span>Fullstack Developer</span>
+    <div class="role-wrapper">
+      <span>Fullstack Developer</span> &
       <span>Web Specialist</span>
     </div>
   </section>
@@ -20,30 +22,43 @@ import sadIcon from "../../assets/SADIcon.png";
 </script>
 <style lang="scss" scoped>
 .me {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .logo-wrapper {
+    margin-bottom: 5px;
+    .logo {
+      height: 100px;
+      object-fit: contain;
+    }
+  }
+
   .name-wrapper {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     color: black;
     position: relative;
     width: 100%;
+    gap: 8px;
 
     .first-wrapper {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
+      gap: 5px;
 
       hr {
-        width: 30px;
+        width: 100%;
         height: 2px;
         background: black;
         border: none;
       }
 
       .first {
-        letter-spacing: 4px;
-        padding-left: 6px;
+        letter-spacing: 5px;
+        padding-left: 5px;
       }
     }
 
@@ -55,8 +70,7 @@ import sadIcon from "../../assets/SADIcon.png";
   }
 
   .role-wrapper {
-    font-size: 16px;
-    opacity: 0.6;
+    opacity: 0.5;
   }
 }
 </style>

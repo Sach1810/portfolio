@@ -4,9 +4,7 @@
     :style="{
       borderRadius: '50%',
       backgroundColor: props.backgroundColor,
-      width: 'fit-content',
-      height: 'fit-content',
-      padding: '5%',
+      padding: props.padding,
     }"
   >
     <slot />
@@ -14,12 +12,19 @@
 </template>
 
 <script setup>
+import { ref, onMounted, watchEffect } from "vue";
 const props = defineProps({
   backgroundColor: {
     type: String,
     default: "#000",
   },
+  padding: {
+    type: String,
+    default: "10px",
+  },
 });
+
+const slotContentRef = ref(null);
 </script>
 
 <style lang="scss" scoped></style>

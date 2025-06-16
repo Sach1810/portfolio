@@ -1,14 +1,12 @@
 <template>
   <div>
     <button @click="downloadPDF">Download PDF</button>
-    <CvTest @pdfContent="pdfContent = $event" ref="pdfContent" />
+    <FullResume @pdfContent="pdfContent = $event" ref="pdfContent" />
   </div>
-  <!-- <SachaCv @pdfContent="pdfContent = $event" ref="pdfContent" /> -->
 </template>
 
 <script setup>
-// import SachaCv from "../components/SachaCv.vue";
-import CvTest from "../components/cv/TestCv.vue";
+import FullResume from "../components/cv/FullCv.vue";
 import { ref, nextTick } from "vue";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
