@@ -110,6 +110,7 @@ $pagePadding: 20px;
   box-sizing: border-box;
   font-family: "Kodchasan";
   font-size: $baseFontSize;
+  border-radius: 10px;
 
   &.print {
     width: 794px; /* A4 width at 96 DPI */

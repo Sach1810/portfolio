@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative; width: 100%; height: 100%">
+  <div style="position: relative; width: 100%; height: 100%; padding-top: 70px">
     <div class="actions-wrapper">
       <PhDownloadSimple :size="32" color="#ffffff" @click="downloadPDF" />
       <PhPrinter :size="32" color="#ffffff" @click="printPDF" />
