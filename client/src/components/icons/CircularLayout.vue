@@ -26,5 +26,3 @@ const props = defineProps({
 
 const slotContentRef = ref(null);
 </script>
-
-<style lang="scss" scoped></style>

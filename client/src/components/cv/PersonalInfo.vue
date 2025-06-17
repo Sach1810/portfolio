@@ -4,9 +4,9 @@
     <span>0545776682</span>
     <span>Email:</span>
     <span>sach1810@gmail.com</span>
-    <span>Address:</span>
+    <span>Add:</span>
     <span>Uzi Hitman, Netanya</span>
-    <span>Languages:</span>
+    <span>Lan:</span>
     <span
       ><strong>English</strong> (native), <strong>Hebrew</strong> (basic)</span
     >

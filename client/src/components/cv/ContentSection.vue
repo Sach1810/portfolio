@@ -1,7 +1,7 @@
 <template>
   <section class="flex-center">
     <CircularLayout v-if="props.iconName" class="icon-wrapper">
-      <component :is="iconComponent" :size="20" color="#fff" />
+      <component :is="iconComponent" :size="16" color="#fff" />
     </CircularLayout>
     <div class="title-wrapper" v-if="slots.title">
       <hr />
@@ -19,9 +19,12 @@ import { computed } from "vue";
 import CircularLayout from "../icons/CircularLayout.vue";
 import {
   PhPaperPlaneTilt,
-  PhChartPieSlice,
   PhPerson,
   PhDevices,
+  PhChartPieSlice,
+  PhBriefcase,
+  PhStudent,
+  PhUserList,
 } from "@phosphor-icons/vue";
 
 const slots = defineSlots();
@@ -35,9 +38,12 @@ const props = defineProps({
 const iconComponent = computed(() => {
   const icons = {
     PhPaperPlaneTilt,
-    PhChartPieSlice,
     PhPerson,
     PhDevices,
+    PhChartPieSlice,
+    PhBriefcase,
+    PhStudent,
+    PhUserList,
   };
   if (!props.iconName || !icons[props.iconName]) {
     return null;
@@ -51,7 +57,7 @@ section {
   width: 100%;
 
   .icon-wrapper {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     display: content;
     padding: 20px;
   }

@@ -11,7 +11,7 @@
             <PersonalInfo />
           </template>
         </ContentSection>
-        <ContentSection iconName="PhChartPieSlice">
+        <ContentSection iconName="PhPerson">
           <template #title>
             <span>PERSONAL SKILLS</span>
           </template>
@@ -19,7 +19,7 @@
             <PersonalSkills />
           </template>
         </ContentSection>
-        <ContentSection iconName="PhChartPieSlice">
+        <ContentSection iconName="PhDevices">
           <template #title>
             <span>TECHNICAL SKILLS</span>
           </template>
@@ -27,10 +27,18 @@
             <TechnicalSkills />
           </template>
         </ContentSection>
+        <ContentSection iconName="PhStudent">
+          <template #title>
+            <span>Education</span>
+          </template>
+          <template #content>
+            <EducationRecords />
+          </template>
+        </ContentSection>
       </div>
       <div class="divider"><div class="vertical-line"></div></div>
       <div class="side right">
-        <ContentSection iconName="PhPerson">
+        <ContentSection iconName="PhChartPieSlice">
           <template #title>
             <span>OVERVIEW</span>
           </template>
@@ -47,7 +55,20 @@
             solving real-world problems with practical, reliable tech solution
           </template>
         </ContentSection>
-        <EmploymentAndEducationRecords />
+        <ContentSection iconName="PhBriefcase">
+          <template #title>
+            <span>Experience</span>
+          </template>
+          <template #content>
+            <EmploymentRecords />
+          </template>
+        </ContentSection>
+        <ContentSection iconName="PhUserList">
+          <template #title>
+            <span>References</span>
+          </template>
+          <template #content> Available upon request. </template>
+        </ContentSection>
       </div>
     </div>
   </div>
@@ -62,7 +83,9 @@ import ContentSection from "./ContentSection.vue";
 import PersonalInfo from "./PersonalInfo.vue";
 import PersonalSkills from "./PersonalSkills.vue";
 import TechnicalSkills from "./TechnicalSkills.vue";
-import EmploymentAndEducationRecords from "./EmploymentAndEducationRecords.vue";
+import EducationRecords from "./EducationRecords.vue";
+import EmploymentRecords from "./EmploymentRecords.vue";
+
 const emit = defineEmits(["pdfContent"]);
 const pdfContent = ref(null);
 const iconSize = 50;
@@ -76,26 +99,32 @@ $baseFontSize: 14px;
 $pagePadding: 20px;
 
 .pdf-a4 {
-  @media print {
-    width: 794px; /* A4 width at 96 DPI */
-    height: 1123px; /* A4 height at 96 DPI */
-  }
   max-width: 794px; /* A4 width at 96 DPI */
   background: white;
   color: black;
   box-sizing: border-box;
   font-family: "Kodchasan";
   font-size: $baseFontSize;
+
+  @media print {
+    width: 794px; /* A4 width at 96 DPI */
+    height: 1123px; /* A4 height at 96 DPI */
+  }
+
   .content {
     height: 100%;
     width: 100%;
-    padding: 40px $pagePadding;
+    padding: $pagePadding;
     display: grid;
     grid-template-columns: 0.6fr 20px 1fr;
-    grid-column-gap: 20px;
+    grid-column-gap: 5px;
 
     @include media.respond-to(md) {
       grid-template-columns: 1fr;
+    }
+
+    @media print {
+      grid-template-columns: 0.6fr 20px 1fr;
     }
     .side {
       display: flex;
@@ -106,9 +135,7 @@ $pagePadding: 20px;
 
     .divider {
       height: 100%;
-      width: 100%;
       justify-self: center;
-
       .vertical-line {
         width: 2px;
         height: 100%;
