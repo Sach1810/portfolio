@@ -1,5 +1,5 @@
 <template>
-  <div ref="pdfContent" class="pdf-a4">
+  <div ref="pdfContent" :class="['pdf-a4', forPrint ? 'print' : 'screen']">
     <div class="content">
       <div class="side left">
         <MeArea />
@@ -85,7 +85,12 @@ import PersonalSkills from "./PersonalSkills.vue";
 import TechnicalSkills from "./TechnicalSkills.vue";
 import EducationRecords from "./EducationRecords.vue";
 import EmploymentRecords from "./EmploymentRecords.vue";
-
+const props = defineProps({
+  forPrint: {
+    type: Boolean,
+    default: false,
+  },
+});
 const emit = defineEmits(["pdfContent"]);
 const pdfContent = ref(null);
 const iconSize = 50;
@@ -106,9 +111,17 @@ $pagePadding: 20px;
   font-family: "Kodchasan";
   font-size: $baseFontSize;
 
-  @media print {
+  &.print {
     width: 794px; /* A4 width at 96 DPI */
     height: 1123px; /* A4 height at 96 DPI */
+  }
+
+  &.screen {
+    .content {
+      @include media.respond-to(md) {
+        grid-template-columns: 1fr;
+      }
+    }
   }
 
   .content {
@@ -119,13 +132,6 @@ $pagePadding: 20px;
     grid-template-columns: 0.6fr 20px 1fr;
     grid-column-gap: 5px;
 
-    @include media.respond-to(md) {
-      grid-template-columns: 1fr;
-    }
-
-    @media print {
-      grid-template-columns: 0.6fr 20px 1fr;
-    }
     .side {
       display: flex;
       flex-direction: column;
@@ -143,15 +149,6 @@ $pagePadding: 20px;
         transform: translateX(50%);
       }
     }
-  }
-}
-
-@media print {
-  .pdf-a4 {
-    width: 210mm;
-    height: 297mm;
-    margin: 0;
-    padding: 40px;
   }
 }
 </style>

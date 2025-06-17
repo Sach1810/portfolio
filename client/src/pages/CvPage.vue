@@ -4,7 +4,13 @@
       <PhDownloadSimple :size="32" color="#ffffff" @click="downloadPDF" />
       <PhPrinter :size="32" color="#ffffff" @click="printPDF" />
     </div>
-    <FullResume @pdfContent="pdfContent = $event" ref="pdfContent" />
+    <FullResume />
+    <FullResume
+      @pdfContent="pdfContent = $event"
+      ref="pdfContent"
+      :forPrint="true"
+      style="z-index: -100"
+    />
   </div>
 </template>
 
