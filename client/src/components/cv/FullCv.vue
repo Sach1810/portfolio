@@ -115,6 +115,8 @@ $pagePadding: 20px;
   &.print {
     width: 794px; /* A4 width at 96 DPI */
     height: 1123px; /* A4 height at 96 DPI */
+    position: absolute;
+    top: 0;
   }
 
   &.screen {
