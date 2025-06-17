@@ -76,14 +76,15 @@ $baseFontSize: 14px;
 $pagePadding: 20px;
 
 .pdf-a4 {
-  width: 794px; /* A4 width at 96 DPI */
-  height: 1123px; /* A4 height at 96 DPI */
+  @media print {
+    width: 794px; /* A4 width at 96 DPI */
+    height: 1123px; /* A4 height at 96 DPI */
+  }
   background: white;
   color: black;
   box-sizing: border-box;
   font-family: "Kodchasan";
   font-size: $baseFontSize;
-  border: 1px solid #000;
   .content {
     height: 100%;
     width: 100%;
@@ -91,6 +92,10 @@ $pagePadding: 20px;
     display: grid;
     grid-template-columns: 0.6fr 20px 1fr;
     grid-column-gap: 20px;
+
+    @include media.respond-to(md) {
+      grid-template-columns: 1fr;
+    }
     .side {
       display: flex;
       flex-direction: column;

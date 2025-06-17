@@ -1,3 +1,5 @@
+@use "@/styles/media" as *;
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -13,6 +15,12 @@
   --hc1: hsl(178deg 90% 38%);
 
   color: var(--c1);
+
+  @include respond-to(md) {
+    --c1: red;
+    --c2: green;
+    --c3: blue;
+  }
 }
 
 @font-face {

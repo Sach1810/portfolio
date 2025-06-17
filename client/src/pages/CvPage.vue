@@ -42,5 +42,3 @@ async function downloadPDF() {
   pdf.save("sacha_david_cv.pdf");
 }
 </script>
-
-<style lang="scss" scoped></style>

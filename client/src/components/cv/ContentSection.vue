@@ -75,6 +75,7 @@ section {
 
   .content-wrapper {
     font-weight: normal;
+    width: 100%;
   }
 }
 </style>

@@ -33,5 +33,9 @@ nav {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @include media.respond-to(md) {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
