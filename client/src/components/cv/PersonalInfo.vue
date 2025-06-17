@@ -1,5 +1,5 @@
 <template>
-  <div class="personal-info">
+  <div class="personal-info col-2-list-kv">
     <span>Mobile:</span>
     <span>0545776682</span>
     <span>Email:</span>
@@ -12,13 +12,3 @@
     >
   </div>
 </template>
-
-<script setup></script>
-
-<style lang="scss" scoped>
-.personal-info {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 0 10px;
-}
-</style>

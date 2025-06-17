@@ -1,5 +1,5 @@
 <template>
-  <div class="personal-skills">
+  <div class="personal-skills col-2-list-eq">
     <span>Analytical</span>
     <span>Problem-Solving</span>
     <span>Teamwork</span>
@@ -12,11 +12,3 @@
     <span>Prioritization</span>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.personal-skills {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px 10px;
-}
-</style>

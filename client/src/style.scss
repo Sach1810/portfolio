@@ -15,12 +15,6 @@
   --hc1: hsl(178deg 90% 38%);
 
   color: var(--c1);
-
-  @include respond-to(md) {
-    --c1: red;
-    --c2: green;
-    --c3: blue;
-  }
 }
 
 @font-face {
@@ -116,4 +110,22 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.col-2-list-eq {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 2px 10px;
+  @include media.respond-to(md) {
+    gap: 2px 30px;
+  }
+}
+
+.col-2-list-kv {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 2px 10px;
+  @include media.respond-to(md) {
+    gap: 2px 30px;
+  }
 }

@@ -80,6 +80,7 @@ $pagePadding: 20px;
     width: 794px; /* A4 width at 96 DPI */
     height: 1123px; /* A4 height at 96 DPI */
   }
+  max-width: 794px; /* A4 width at 96 DPI */
   background: white;
   color: black;
   box-sizing: border-box;

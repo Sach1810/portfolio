@@ -1,5 +1,5 @@
 <template>
-  <div class="technicall-skills">
+  <div class="technicall-skills col-2-list-eq">
     <span>Javascript</span>
     <span>Typescript</span>
     <span>Vue</span>
@@ -15,13 +15,7 @@
     <span>Redis</span>
     <span>Microservices</span>
     <span>PHP</span>
+    <span>Mongo Db</span>
+    <span>Mysql</span>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.technicall-skills {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px 10px;
-}
-</style>
