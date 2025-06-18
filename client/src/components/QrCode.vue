@@ -10,8 +10,8 @@ const qrCodeRef = ref(null);
 const extension = ref("svg");
 
 const options = ref({
-  width: 150,
-  height: 150,
+  width: 115,
+  height: 115,
   type: "svg",
   data: "https://sachadavid.dev",
   image: "/sad.ico",
@@ -69,11 +69,12 @@ function download() {
 <style scoped>
 #qr-code {
   background: #fff;
-  width: 170px;
-  height: 170px;
+  width: 120px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 20px;
+  overflow: hidden;
 }
 </style>

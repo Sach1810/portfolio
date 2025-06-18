@@ -1,10 +1,19 @@
 <template>
-  <div style="position: relative; width: 100%; height: 100%; padding-top: 70px">
-    <div class="actions-wrapper">
-      <PhDownloadSimple :size="32" color="#ffffff" @click="downloadPDF" />
-      <PhPrinter :size="32" color="#ffffff" @click="printPDF" />
+  <div class="cv-page">
+    <div class="actions-wrapper max-width">
+      <component
+        class="icon"
+        v-for="(icon, index) in icons"
+        :key="index"
+        :is="icon.component"
+        :size="icon.size"
+        :color="icon.color"
+        :weight="icon.weight"
+        @click="icon.action()"
+        v-tippy="{ content: icon.tooltip, placement: 'bottom' }"
+      />
     </div>
-    <FullResume />
+    <FullResume class="display-resume max-width" />
     <FullResume
       @pdfContent="pdfContent = $event"
       ref="pdfContent"
@@ -19,12 +28,11 @@ import FullResume from "../components/cv/FullCv.vue";
 import { ref, nextTick } from "vue";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
+import { directive as VTippy } from "vue-tippy";
 import { PhDownloadSimple, PhPrinter } from "@phosphor-icons/vue";
 
 const pdfContent = ref(null);
 async function downloadPDF() {
-  console.log(pdfContent.value);
   await nextTick();
   const el = pdfContent.value;
   if (!el) return alert("No content to export.");
@@ -85,28 +93,67 @@ async function printPDF() {
   `);
   printWindow.document.close();
 }
+
+const rootStyles = getComputedStyle(document.documentElement);
+const iconColor = rootStyles.getPropertyValue("--c-icon-primary").trim();
+const iconSize = 32;
+const iconWeight = "bold";
+const icons = [
+  {
+    component: PhDownloadSimple,
+    size: iconSize,
+    color: iconColor,
+    weight: iconWeight,
+    action: downloadPDF,
+    tooltip: "Download CV",
+  },
+  {
+    component: PhPrinter,
+    size: iconSize,
+    color: iconColor,
+    weight: iconWeight,
+    action: printPDF,
+    tooltip: "Print CV",
+  },
+];
 </script>
 
 <style lang="scss" scoped>
-.actions-wrapper {
-  position: absolute;
-  right: 0;
-  top: 0;
+.cv-page {
   display: flex;
-  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  padding: 0 10px 10px var(--nav-width);
 
-  > svg {
-    cursor: pointer;
-    margin-left: 10px;
-    transition: transform 0.2s ease-in-out;
+  .max-width {
+    max-width: 794px; /* A4 width at 96 DPI */
+    width: 100%;
+    margin: 0 auto;
+  }
 
-    &:hover {
-      transform: scale(1.1);
+  .actions-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 0;
+    > svg {
+      cursor: pointer;
+      margin-left: 10px;
+      transition: transform 0.2s ease-in-out;
+      outline: none;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      &:active {
+        opacity: 0.5;
+      }
     }
+  }
 
-    &:active {
-      opacity: 0.5;
-    }
+  .display-resume {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 }
 </style>

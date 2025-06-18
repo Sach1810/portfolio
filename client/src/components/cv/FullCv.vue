@@ -104,7 +104,6 @@ $baseFontSize: 14px;
 $pagePadding: 20px;
 
 .pdf-a4 {
-  max-width: 794px; /* A4 width at 96 DPI */
   background: white;
   color: black;
   box-sizing: border-box;

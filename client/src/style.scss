@@ -1,7 +1,7 @@
 @use "@/styles/media" as *;
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Kodchasan", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -9,10 +9,16 @@
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --c1: #0f0f0f;
-  --c2: #131313;
-  --c3: #1e1e1e;
-  --hc1: hsl(178deg 90% 38%);
+
+  --c-icon-primary: white;
+  --c-darkest: #1e1e2f;
+  --c-dark: #2b3a42;
+  --c-light: #e0e0e0;
+  --c-lightest: #f4f6f8;
+  --c-primary: #00bfa6;
+
+  --nav-width: 70px;
+  --pagePadding: 40px;
 
   color: var(--c1);
 }
