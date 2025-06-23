@@ -1,19 +1,28 @@
 <template>
-  <div id="qr-code" ref="qrCodeRef"></div>
+  <div id="qr-code" ref="qrCodeRef" @click="emit"></div>
+  <div class="test">{{ updates.direction }}</div>
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import QRCodeStyling from "qr-code-styling";
+import socketService from "@/services/SocketService";
+
+const route = useRoute();
+const router = useRouter();
 
 const qrCodeRef = ref(null);
-const extension = ref("svg");
+const desitnationUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://sachadavid.dev/#"
+    : "https://192.168.86.27:5173/#";
 
 const options = ref({
   width: 115,
   height: 115,
   type: "svg",
-  data: "https://sachadavid.dev",
+  data: `${desitnationUrl}/controller`,
   image: "/sad.ico",
   margin: 0,
   qrOptions: {
@@ -48,6 +57,11 @@ const options = ref({
 
 const qrCode = new QRCodeStyling(options.value);
 
+// Update QR code data when socket connects
+socketService.onConnect((socketId) => {
+  options.value.data = `${desitnationUrl}/controller?socketId=${socketId}`;
+});
+
 onMounted(() => {
   if (qrCodeRef.value) {
     qrCode.append(qrCodeRef.value);
@@ -61,9 +75,22 @@ watch(
   }
 );
 
-function download() {
-  qrCode.download({ extension: extension.value });
+function emit() {
+  if (!socketService.isConnected()) return;
+  socketService.emit("test", "Hello from QR Code!");
 }
+
+const updates = ref({
+  direction: "none",
+  speed: 0,
+});
+
+socketService.on("startJobSearch", (msg) => {
+  const targetPath = "/jobsearch";
+  if (route.path !== targetPath) {
+    router.replace(targetPath);
+  }
+});
 </script>
 
 <style scoped>
@@ -76,5 +103,16 @@ function download() {
   justify-content: center;
   border-radius: 20px;
   overflow: hidden;
+}
+
+.test {
+  position: absolute;
+  top: 10px;
+  left: -50vw;
+  color: black;
+  font-size: 50px;
+  padding: 10px;
+  color: #fff;
+  font-weight: bold;
 }
 </style>

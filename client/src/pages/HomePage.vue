@@ -1,12 +1,9 @@
 <template>
   <div class="home-page">
     <div class="top-layout">
-      <div class="play-container">
-        <QrCode @click="isWalking = !isWalking" />Scan to play job search
-      </div>
+      <div class="play-container"><QrCode />Scan to play job search</div>
       <div>
-        <SachaCartoonArmsCrossed v-if="!isWalking" style="height: 50vh" />
-        <SachaWalking style="height: 48vh" v-else />
+        <SachaCartoonArmsCrossed style="height: 50vh" />
       </div>
     </div>
     <div class="bottom-layout">
@@ -71,7 +68,6 @@
         <rect x="850px" y="0" width="1000" height="300" fill="var(--c-light)" />
       </svg>
     </div>
-    <!-- <div class="subtitle">Fullstack Developer</div> -->
   </div>
 </template>
 
@@ -79,9 +75,6 @@
 import { ref } from "vue";
 import QrCode from "../components/QrCode.vue";
 import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
-import SachaWalking from "../components/SachaWalking.vue";
-
-const isWalking = ref(false);
 </script>
 
 <style lang="scss" scoped>
