@@ -48,7 +48,7 @@ function handleIsWalking() {
 }
 
 function updatePosition(direction) {
-  if (!direction) return;
+  if (!direction || direction === "center") return;
   if (
     (direction === "up" && y.value === 0) ||
     (direction === "down" && y.value === gridSize - 1) ||

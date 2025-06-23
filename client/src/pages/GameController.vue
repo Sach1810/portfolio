@@ -24,7 +24,7 @@
 <script setup>
 import { ref } from "vue";
 import socketService from "@/services/SocketService.js";
-import GyroscopeTiltService from "@/services/GyroscopeTiltService.js";
+import TiltDetectorService from "@/services/TiltDetectorService.js";
 
 function getSocketIdFromHash() {
   const hash = window.location.hash;
@@ -47,8 +47,6 @@ socketService.onConnect((socketId) => {
 });
 
 function updateGame({ direction }) {
-  console.log(`Updating game with direction: ${direction}`);
-  // console.log(`Updating game with direction: ${direction}, speed: ${speed}`);
   socketService.emit("updateJobSearch", {
     socketId: clientSocketId,
     direction,
@@ -56,16 +54,10 @@ function updateGame({ direction }) {
 }
 const lastDirection = ref("");
 let lastUpdate = 0;
-const tiltService = new GyroscopeTiltService({
-  onDirectionDetected: (direction) => {
-    const now = Date.now();
-    if (now - lastUpdate < 2000) return; // Throttle: ignore if within 2s
-    lastUpdate = now;
 
-    console.log(`Direction: ${direction}`);
+const tiltService = new TiltDetectorService({
+  onTilt: (direction, x, y) => {
     updateGame({ direction });
-    console.log("");
-    lastDirection.value = direction;
   },
 });
 </script>
