@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="link">
     <component
       :is="props.icon"
       :size="props.size"
@@ -36,8 +36,12 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.label {
-  margin-top: -10px;
-  font-weight: bold;
+.link {
+  display: flex;
+  align-items: center;
+  .label {
+    margin-left: $space-m;
+    font-weight: bold;
+  }
 }
 </style>

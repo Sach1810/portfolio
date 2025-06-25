@@ -110,6 +110,9 @@ $pagePadding: 20px;
   font-family: "Kodchasan";
   font-size: $baseFontSize;
   border-radius: 10px;
+  @include respond-to(md) {
+    border-radius: 0;
+  }
 
   &.print {
     width: 794px; /* A4 width at 96 DPI */
@@ -151,6 +154,24 @@ $pagePadding: 20px;
         transform: translateX(50%);
       }
     }
+  }
+}
+
+.col-2-list-eq {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 0px 10px;
+  @include respond-to(md) {
+    gap: px 30px;
+  }
+}
+
+.col-2-list-kv {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 2px 10px;
+  @include respond-to(md) {
+    gap: 2px 30px;
   }
 }
 </style>

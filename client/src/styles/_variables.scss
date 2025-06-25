@@ -5,6 +5,12 @@ $dark: #0d1f49;
 $text: #444;
 $accent: #ffcb77;
 $highlight: #8cfcfc;
+$iconColor: #fff;
+
+// Allows access from js
+:root {
+  --iconColor: #fff;
+}
 
 $font-xs: 0.5rem;
 $font-s: 0.7rem;

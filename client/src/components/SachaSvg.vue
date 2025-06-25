@@ -159,7 +159,10 @@
                 cy="0"
                 rx="18"
                 ry="18"
-                :class="['fill-dark', shouldAnimate ? 'left-eye-animate' : '']"
+                :class="[
+                  'fill-dark',
+                  shouldAnimate || animateWink ? 'left-eye-animate' : '',
+                ]"
                 :style="{ fillOpacity: 1, stroke: 'none', fill: props.color }"
               />
             </g>
@@ -212,6 +215,10 @@
 <script setup>
 const props = defineProps({
   shouldAnimate: {
+    type: Boolean,
+    default: false,
+  },
+  animateWink: {
     type: Boolean,
     default: false,
   },

@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
-    <BackgroundPattern class="background-pattern" />
-    <div ref="navArea" class="nav-area">
-      <NavBar />
-    </div>
-    <div ref="contentArea" class="content-area">
-      <router-view></router-view>
+    <div class="nav-area"><NavBar /></div>
+    <div class="content-area">
+      <BackgroundPattern class="background-pattern" />
+      <div class="content-area">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -55,9 +55,8 @@ onBeforeUnmount(() => {
   background-repeat: no-repeat;
   background-size: cover;
   color: #ffffff;
-  position: relative;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: max-content 1fr;
 
   .background-pattern {
     position: fixed;
@@ -66,32 +65,14 @@ onBeforeUnmount(() => {
     z-index: 0;
     opacity: 0.1;
     transform: translateX(-50%);
-    // width: 100dvw;
-  }
-
-  .nav-area {
-    position: fixed;
-    left: 50%;
-    top: 0;
-    width: var(--nav-width);
-    height: fit-content;
-    z-index: 100;
-  }
-
-  .content-area {
-    position: relative;
-    min-height: 100dvh;
-    width: 100%;
-    overflow: scroll;
   }
 }
 
 .home-page {
   display: grid;
-  grid-template-columns: 1fr; // single column on small screens
+  grid-template-columns: 1fr;
   @media (min-width: 600px) {
     grid-template-columns: repeat(2, max-content);
   }
-  // ... rest of your styles
 }
 </style>

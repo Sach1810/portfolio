@@ -7,9 +7,16 @@
           :style="transitionDurationStyle"
           class="line--1"
           d="M0 70l28-28c2-2 2-2 7-2h64"
+          :stroke="props.color"
         />
-        <path :style="transitionDurationStyle" class="line--2" d="M0 50h99" />
         <path
+          :stroke="props.color"
+          :style="transitionDurationStyle"
+          class="line--2"
+          d="M0 50h99"
+        />
+        <path
+          :stroke="props.color"
           :style="transitionDurationStyle"
           class="line--3"
           d="M0 30l28 28c2 2 2 2 7 2h64"
@@ -25,7 +32,8 @@ import { defineProps, defineEmits } from "vue";
 const props = defineProps({
   size: { type: String, default: "40px" },
   isOpen: { type: Boolean, default: false },
-  transitionDuration: { type: String, default: "0.3s" },
+  transitionDuration: { type: String, default: "0.7s" },
+  color: { type: String, default: "#000" },
 });
 const emit = defineEmits(["clicked"]);
 
@@ -80,7 +88,6 @@ const transitionDurationStyle = {
   svg {
     path {
       fill: none;
-      stroke: black;
       stroke-width: 3;
       stroke-linecap: round;
       stroke-linejoin: round;

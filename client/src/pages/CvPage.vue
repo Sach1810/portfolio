@@ -124,7 +124,7 @@ const icons = [
   flex-direction: column;
   align-items: center;
   min-height: 100dvh;
-  padding: 0 10px 10px var(--nav-width);
+  padding: 0 10px 10px;
 
   .max-width {
     max-width: 794px; /* A4 width at 96 DPI */
