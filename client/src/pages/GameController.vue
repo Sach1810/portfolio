@@ -42,7 +42,6 @@ socketService.onConnect((socketId) => {
   console.log("Connected with socket ID:", clientSocketId);
   socketService.emit("controllerConnected", {
     socketId: clientSocketId,
-    name: "sacha",
   });
 });
 
