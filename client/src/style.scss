@@ -102,6 +102,15 @@
   box-sizing: border-box;
 }
 
+/* Remove focus outlines from interactive elements */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+}
+
 #app {
   min-height: 100dvh;
   min-width: 100dvw;
