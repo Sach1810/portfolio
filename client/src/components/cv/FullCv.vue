@@ -120,7 +120,7 @@ $pagePadding: 20px;
 
   &.screen {
     .content {
-      @include media.respond-to(md) {
+      @include respond-to(md) {
         grid-template-columns: 1fr;
       }
     }

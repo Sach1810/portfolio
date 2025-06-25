@@ -1,72 +1,19 @@
 <template>
   <div class="home-page">
-    <div class="top-layout">
-      <div class="play-container"><QrCode />Scan to play job search</div>
-      <div>
-        <SachaCartoonArmsCrossed style="height: 50vh" />
+    <div class="content">
+      <p>
+        &#x1F44B; Hi, I'm Sacha a creative fullstack developer passionate about
+        building intuitive software experiences.
+      </p>
+
+      <div class="name-container">
+        <div class="name">Sacha</div>
+        <div class="name fill">David</div>
+        <div class="role">Fullstack Developer</div>
       </div>
     </div>
-    <div class="bottom-layout">
-      <svg
-        class="cutout-mask"
-        viewBox="0 0 1000 300"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <defs>
-          <mask id="text-cutout">
-            <!-- Full white base (visible) -->
-            <rect x="0" y="0" width="1000" height="300" fill="white" />
-
-            <!-- Title -->
-            <text
-              x="50%"
-              y="45%"
-              text-anchor="middle"
-              dominant-baseline="middle"
-              font-size="80"
-              font-weight="700"
-              font-family="Kodchasan"
-              fill="black"
-            >
-              SACHA DAVID
-            </text>
-
-            <!-- Subtitle -->
-            <text
-              x="50%"
-              y="75%"
-              text-anchor="middle"
-              dominant-baseline="middle"
-              font-size="30"
-              font-weight="700"
-              font-family="Kodchasan"
-              fill="black"
-              letter-spacing="5"
-            >
-              FULLSTACK DEVELOPER
-            </text>
-          </mask>
-        </defs>
-
-        <rect
-          x="0"
-          y="0"
-          width="1000"
-          height="300"
-          fill="var(--c-light)"
-          mask="url(#text-cutout)"
-        />
-
-        <rect
-          x="-850px"
-          y="0"
-          width="1000"
-          height="300"
-          fill="var(--c-light)"
-        />
-
-        <rect x="850px" y="0" width="1000" height="300" fill="var(--c-light)" />
-      </svg>
+    <div class="image-container">
+      <SachaCartoonArmsCrossed style="height: 550px" />
     </div>
   </div>
 </template>
@@ -78,36 +25,91 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
 </script>
 
 <style lang="scss" scoped>
-$edgePadding: 20px;
 .home-page {
   display: grid;
-  grid-template-rows: 1fr max-content;
+  grid-template-columns: repeat(2, max-content);
   min-height: 100dvh;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  align-content: center;
+  padding: $page-padding;
+  gap: $space-l;
+  justify-content: center;
+  font-weight: normal;
 
-  .top-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  @include respond-to(md) {
+    grid-template-columns: 1fr;
+    align-content: center;
+    padding: $page-padding * 1.5 $page-padding;
+  }
 
-    .play-container {
-      position: absolute;
-      top: 5px;
-      right: 5px;
+  .content {
+    font-size: $font-l;
+
+    @include respond-to(md) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: $font-m;
+    }
+
+    p {
+      max-width: 370px;
+      line-height: 1.5;
+      @include respond-to(md) {
+        padding: 0 $space-xl;
+      }
+    }
+
+    .name-container {
+      margin-top: $space-xl;
+      display: flex;
+      flex-direction: column;
+      font-size: $font-headline;
+      line-height: 1;
+      font-weight: bold;
+
+      @include respond-to(md) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: $font-headline-s;
+        margin-top: $space-m;
+      }
+
+      .name {
+        &.fill {
+          letter-spacing: 0.35rem;
+
+          @include respond-to(md) {
+            letter-spacing: 0.2rem;
+          }
+        }
+      }
+
+      .role {
+        margin-top: $space-m;
+        text-transform: uppercase;
+        font-size: $font-l;
+        letter-spacing: 0.28rem;
+        color: $highlight;
+        text-shadow: -1px -1px 0 $dark, 1px -1px 0 $dark, -1px 1px 0 $dark,
+          1px 1px 0 $dark;
+
+        @include respond-to(md) {
+          font-size: $font-m;
+        }
+      }
     }
   }
 
-  .bottom-layout {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
+  .image-container {
+    margin-top: -$space-xxl;
 
-    .cutout-mask {
-      width: 100%;
-      max-height: 20vh;
-      height: auto;
-      display: block;
+    @include respond-to(md) {
+      margin-top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: $space-xs;
     }
   }
 }

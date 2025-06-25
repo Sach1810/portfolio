@@ -1,4 +1,5 @@
 <template>
+  <h2>{{ activeStageData.title }}</h2>
   <div
     class="grid-wrapper"
     :style="gridWrapperStyle"
@@ -9,7 +10,7 @@
       <div v-for="index in gridSize * gridSize" :key="index" class="cell">
         <component
           v-if="index - 1 === activeCellIndex"
-          :is="activeComponent"
+          :is="activeStageData.component"
           style="height: 100%; max-width: 100%"
         />
       </div>
@@ -150,7 +151,15 @@ socketService.on("updateJobSearch", (data) => {
 const components = [ApplyForJobSvg, InterviewSvg, AcceptSvg];
 const activeComponentIndex = ref(Math.floor(Math.random() * components.length));
 const activeComponent = computed(() => components[activeComponentIndex.value]);
+const activeStageData = computed(() => {
+  const stagesData = [
+    { component: ApplyForJobSvg, title: "Apply for job" },
+    { component: InterviewSvg, title: "Interview for job" },
+    { component: AcceptSvg, title: "Accept job offer" },
+  ];
 
+  return stagesData[activeComponentIndex.value];
+});
 // Helper to get a random cell index that is not the character's position
 function getRandomCellIndex() {
   const charIndex = y.value * gridSize + x.value;

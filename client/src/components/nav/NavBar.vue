@@ -1,5 +1,6 @@
 <template>
   <nav>
+    <HamburgerToClose />
     <router-link
       v-for="(record, index) in navRecords"
       :key="`navRecord${index}`"
@@ -11,6 +12,7 @@
 </template>
 
 <script setup>
+import HamburgerToClose from "@/components/icons/HamburgerToClose.vue";
 import NavRecord from "./NavRecord.vue";
 import { PhHouseLine, PhInfo, PhReadCvLogo } from "@phosphor-icons/vue";
 const rootStyles = getComputedStyle(document.documentElement);
@@ -37,7 +39,7 @@ const navRecords = [
 <style lang="scss" scoped>
 nav {
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   gap: 20px;
   padding: 10px;
 

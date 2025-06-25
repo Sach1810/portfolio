@@ -1,6 +1,5 @@
 <template>
   <div id="qr-code" ref="qrCodeRef" @click="emit"></div>
-  <div class="test">{{ updates.direction }}</div>
 </template>
 
 <script setup>
@@ -103,16 +102,5 @@ socketService.on("startJobSearch", (msg) => {
   justify-content: center;
   border-radius: 20px;
   overflow: hidden;
-}
-
-.test {
-  position: absolute;
-  top: 10px;
-  left: -50vw;
-  color: black;
-  font-size: 50px;
-  padding: 10px;
-  color: #fff;
-  font-weight: bold;
 }
 </style>
