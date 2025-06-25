@@ -8,7 +8,6 @@ class TiltDetectorService {
         console.log(`Direction: ${direction}`);
       };
 
-    this.isReady = false;
     this.lastTrigger = 0;
     this.lastDirection = null;
 
@@ -38,10 +37,6 @@ class TiltDetectorService {
     if (!acc) return;
 
     const { x, y } = acc;
-
-    if (!this.isReady) {
-      return;
-    }
 
     const now = Date.now();
     if (now - this.lastTrigger < this.cooldown) return;
