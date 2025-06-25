@@ -1,16 +1,15 @@
 <template>
   <div class="home-page">
     <div class="content">
-      <p>
-        &#x1F44B; Hi, I'm Sacha a creative fullstack developer passionate about
-        building intuitive software experiences.
-      </p>
-
       <div class="name-container">
         <div class="name">Sacha</div>
         <div class="name fill">David</div>
         <div class="role">Fullstack Developer</div>
       </div>
+      <p>
+        &#x1F44B; Hi, I'm Sacha a creative fullstack developer passionate about
+        building intuitive software experiences.
+      </p>
     </div>
     <div class="image-container">
       <SachaCartoonArmsCrossed style="height: 550px" />
@@ -54,6 +53,7 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
     p {
       max-width: 370px;
       line-height: 1.5;
+      margin-top: $space-l;
       @include respond-to(md) {
         padding: 0 $space-xl;
       }
@@ -102,8 +102,6 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
   }
 
   .image-container {
-    margin-top: -$space-xxl;
-
     @include respond-to(md) {
       margin-top: 0;
       display: flex;
