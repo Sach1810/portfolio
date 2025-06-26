@@ -11,6 +11,7 @@
           v-for="(record, index) in navRecords"
           :key="`navRecord${index}`"
           :to="record.to"
+          @click="emit('toggle')"
         >
           <NavRecord
             :icon="record.icon"
