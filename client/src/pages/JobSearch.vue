@@ -1,33 +1,60 @@
 <template>
-  <div
-    class="grid-wrapper"
-    :style="gridWrapperStyle"
-    tabindex="0"
-    @keydown="handleKey"
-    @touchstart="handleTouchStart"
-    @touchend="handleTouchEnd"
-  >
-    <div class="grid" :style="gridStyle">
-      <div v-for="index in gridSize * gridSize" :key="index" class="cell">
-        <Transition name="cell-svg" mode="out-in">
-          <Tree
-            v-if="treeCells.includes(index - 1)"
-            style="height: 100%; max-width: 100%"
-            :key="'tree-' + (index - 1)"
-          />
-          <component
-            v-else-if="index - 1 === activeCellIndex"
-            :is="activeStageData.component"
-            style="height: 100%; max-width: 100%"
-            :key="'stage-' + (index - 1)"
-          />
-        </Transition>
+  <div>
+    <h1>Job Search</h1>
+    <InterviewSvg style="width: 200px" />
+    <p>
+      Join Sacha on his job hunt. Get to the targets and avoid the trees. For
+      the full experience you will need a computer and mobile device to use as a
+      <strong>controller</strong>
+    </p>
+    <div v-if="isMobile">Swipe to move character</div>
+    <div v-else></div>
+    <div>
+      <QrCode /><span>Scan to connect phone as controller</span
+      ><span>Dont have a phone use the arrows on the keyboard</span>
+    </div>
+    <div class="arrow-keys">
+      <div class="arrow-up">
+        <PhArrowSquareUp :size="50" :color="iconColor" weight="fill" />
+      </div>
+      <div class="arrow-left">
+        <PhArrowSquareLeft :size="50" :color="iconColor" weight="fill" />
+      </div>
+      <div class="arrow-down">
+        <PhArrowSquareDown :size="50" :color="iconColor" weight="fill" />
+      </div>
+      <div class="arrow-right">
+        <PhArrowSquareRight :size="50" :color="iconColor" weight="fill" />
       </div>
     </div>
-    <div class="image-wrapper" :style="imageWrapperStyle">
-      <div class="image" :style="imageStyle">
-        <SachaCartoonArmsCrossed v-if="!isWalking" style="height: 100%" />
-        <SachaWalking style="height: 100%" v-else />
+    <div
+      class="grid-wrapper"
+      :style="gridWrapperStyle"
+      @touchstart="handleTouchStart"
+      @touchend="handleTouchEnd"
+    >
+      <div class="grid" :style="gridStyle">
+        <div v-for="index in gridSize * gridSize" :key="index" class="cell">
+          <Transition name="cell-svg" mode="out-in">
+            <Tree
+              v-if="treeCells.includes(index - 1)"
+              style="height: 100%; max-width: 100%"
+              :key="'tree-' + (index - 1)"
+            />
+            <component
+              v-else-if="index - 1 === activeCellIndex"
+              :is="activeStageData.component"
+              style="height: 100%; max-width: 100%"
+              :key="'stage-' + (index - 1)"
+            />
+          </Transition>
+        </div>
+      </div>
+      <div class="image-wrapper" :style="imageWrapperStyle">
+        <div class="image" :style="imageStyle">
+          <SachaCartoonArmsCrossed v-if="!isWalking" style="height: 100%" />
+          <SachaWalking style="height: 100%" v-else />
+        </div>
       </div>
     </div>
   </div>
@@ -42,12 +69,26 @@ import ApplyForJobSvg from "@/components/jobserach/ApplyForJobSvg.vue";
 import InterviewSvg from "@/components/jobserach/InterviewSvg.vue";
 import AcceptSvg from "@/components/jobserach/AcceptSvg.vue";
 import Tree from "@/components/svgs/TreeSvg.vue";
+import QrCode from "@/components/QrCode.vue";
+import Bowser from "bowser";
+import {
+  PhArrowSquareUp,
+  PhArrowSquareDown,
+  PhArrowSquareLeft,
+  PhArrowSquareRight,
+} from "@phosphor-icons/vue";
+
+const result = Bowser.parse(window.navigator.userAgent);
+const isMobile = result.platform.type === "mobile";
+
+const rootStyles = getComputedStyle(document.documentElement);
+const iconColor = rootStyles.getPropertyValue("--c-font-light").trim();
 
 const isWalking = ref(false);
 const invertImg = ref(false);
 
-const gridSize = 7;
-const cellSize = 100; // px
+const gridSize = isMobile ? 7 : 7;
+const cellSize = isMobile ? 50 : 100; // px
 const gapSize = 0; // px
 
 const gridWrapperStyle = computed(() => ({
@@ -143,6 +184,7 @@ function updatePosition(direction) {
 }
 
 const handleKey = (e) => {
+  if (e && typeof e.preventDefault === "function") e.preventDefault();
   const keysData = {
     ArrowUp: "up",
     ArrowDown: "down",
@@ -236,6 +278,7 @@ onMounted(() => {
   if (el) {
     el.addEventListener("touchmove", preventScroll, { passive: false });
   }
+  window.addEventListener("keydown", handleKey);
 });
 
 onUnmounted(() => {
@@ -243,6 +286,7 @@ onUnmounted(() => {
   if (el) {
     el.removeEventListener("touchmove", preventScroll);
   }
+  window.removeEventListener("keydown", handleKey);
 });
 
 // --- SWIPE SUPPORT FOR MOBILE ---
@@ -288,14 +332,38 @@ function preventScroll(e) {
 </script>
 
 <style lang="scss" scoped>
+.arrow-keys {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-template-rows: repeat(2, max-content);
+  justify-content: center;
+  align-items: center;
+  grid-template-areas:
+    ". up ."
+    "left down right";
+
+  .arrow-up {
+    grid-area: up;
+  }
+  .arrow-left {
+    grid-area: left;
+  }
+  .arrow-down {
+    grid-area: down;
+  }
+  .arrow-right {
+    grid-area: right;
+  }
+}
+
 $c-grid: #f6dfb9;
 $c-outline: #e6c89d;
+
 .grid-wrapper {
   position: relative;
-  outline: none;
-  outline: 10px solid $c-outline;
+  outline: 10px solid $c-bg-dark;
   border-radius: 3px;
-  margin: 100px;
+  box-shadow: 0 0 10px 7px $c-highlight;
   .grid {
     display: grid;
     background: $c-outline;

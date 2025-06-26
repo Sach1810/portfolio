@@ -123,6 +123,7 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
       font-size: $font-headline;
       line-height: 1;
       font-weight: bold;
+      white-space: nowrap;
 
       @include respond-to(md) {
         display: flex;
