@@ -14,7 +14,34 @@
     <div class="image-container">
       <SachaCartoonArmsCrossed class="character" />
     </div>
-    <div class="info-container">Info</div>
+    <div class="info-container">
+      <section class="work-container">
+        <div class="work-item">
+          <div>
+            <h1>Job Search Game</h1>
+            <p>
+              A very basic game that can use a mobile phone as a controller
+              based on the phones movement (also keyboard compatible). Loosly
+              based on Snake
+            </p>
+          </div>
+          <ul>
+            <li>Websockets</li>
+            <li>devicemotion api</li>
+          </ul>
+        </div>
+        <div class="work-item">
+          <div>
+            <h1>Target shooter</h1>
+            <p>Use your fingers to shoot the targets on the screen.</p>
+          </div>
+          <ul>
+            <li>Tensorflow js</li>
+            <li>MediaDevices api</li>
+          </ul>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -123,18 +150,31 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
   }
 
   .info-container {
-    padding: $space-m;
     border-radius: 5px;
     grid-column: 1 / -1;
     height: 100px;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.15),
-      rgba(255, 255, 255, 0.02)
-    );
 
     @include respond-to(md) {
       grid-column: auto;
+    }
+
+    .work-container {
+      display: flex;
+      flex-direction: column;
+      gap: $space-m;
+
+      .work-item {
+        display: grid;
+        grid-template-columns: 1fr max-content;
+        gap: $space-xl;
+        padding: $space-l;
+        border-radius: 5px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.15),
+          rgba(255, 255, 255, 0.02)
+        );
+      }
     }
   }
 }

@@ -36,7 +36,7 @@ import { defineProps, defineEmits } from "vue";
 import HamburgerToClose from "@/components/icons/HamburgerToClose.vue";
 import NavRecord from "./NavRecord.vue";
 import { PhHouseLine, PhInfo, PhReadCvLogo } from "@phosphor-icons/vue";
-import SachaSvg from "@/components/SachaSvg.vue";
+import SachaSvg from "@/components/svgs/SachaSvg.vue";
 
 const props = defineProps({ expanded: Boolean });
 const emit = defineEmits(["toggle"]);
