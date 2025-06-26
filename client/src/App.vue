@@ -1,40 +1,21 @@
 <template>
-  <div class="app-container">
-    <div class="nav-area"><NavBar /></div>
+  <div class="app-container" :class="{ 'nav-expanded': navExpanded }">
+    <div class="nav-area">
+      <NavBar :expanded="navExpanded" @toggle="navExpanded = !navExpanded" />
+    </div>
     <div class="content-area">
       <BackgroundPattern class="background-pattern" />
-      <div class="content-area">
-        <router-view></router-view>
-      </div>
+      <router-view />
     </div>
   </div>
 </template>
+
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref } from "vue";
 import NavBar from "@/components/nav/NavBar.vue";
 import BackgroundPattern from "@/components/BackgroundPattern.vue";
 
-const navArea = ref(null);
-const contentArea = ref(null);
-
-const updateNavPosition = () => {
-  if (!contentArea.value || !navArea.value) return;
-  const rect = contentArea.value.getBoundingClientRect();
-  navArea.value.style.position = "fixed";
-  navArea.value.style.top = `${rect.top}px`;
-  navArea.value.style.left = `${rect.left}px`;
-};
-
-onMounted(() => {
-  updateNavPosition();
-  window.addEventListener("scroll", updateNavPosition);
-  window.addEventListener("resize", updateNavPosition);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("scroll", updateNavPosition);
-  window.removeEventListener("resize", updateNavPosition);
-});
+const navExpanded = ref(false);
 </script>
 
 <style lang="scss" scoped>
@@ -46,17 +27,22 @@ onBeforeUnmount(() => {
   font-family: "Kodchasan", system-ui, Avenir, Helvetica, Arial, sans-serif;
   background: radial-gradient(
     circle at 30% 30%,
-    #004a68,
-    #116d75 70%,
-    #00b3bd 100%
+    $c-bg-dark,
+    $c-bg-mid 70%,
+    $c-bg-light 100%
   );
-  background-color: #0f4f54;
+  background-color: $c-bg-mid;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
-  color: #ffffff;
+  color: $c-font-light;
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: $nav-closed-width 1fr;
+  transition: grid-template-columns 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.nav-expanded {
+    grid-template-columns: 300px 1fr;
+  }
 
   .background-pattern {
     position: fixed;
@@ -65,14 +51,6 @@ onBeforeUnmount(() => {
     z-index: 0;
     opacity: 0.1;
     transform: translateX(-50%);
-  }
-}
-
-.home-page {
-  display: grid;
-  grid-template-columns: 1fr;
-  @media (min-width: 600px) {
-    grid-template-columns: repeat(2, max-content);
   }
 }
 </style>

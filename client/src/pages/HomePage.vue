@@ -1,6 +1,5 @@
 <template>
   <div class="home-page">
-    <QrCode />
     <div class="content">
       <div class="name-container">
         <div class="name">Sacha</div>
@@ -13,8 +12,9 @@
       </p>
     </div>
     <div class="image-container">
-      <SachaCartoonArmsCrossed style="height: 550px" />
+      <SachaCartoonArmsCrossed class="character" />
     </div>
+    <div class="info-container">Info</div>
   </div>
 </template>
 
@@ -36,9 +36,10 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
   font-weight: normal;
 
   @include respond-to(md) {
+    $padding-t-b: $page-padding * 1.5;
     grid-template-columns: 1fr;
     align-content: center;
-    padding: $page-padding * 1.5 $page-padding;
+    padding: $padding-t-b $nav-closed-width $padding-t-b 0;
   }
 
   .content {
@@ -91,9 +92,9 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
         text-transform: uppercase;
         font-size: $font-l;
         letter-spacing: 0.28rem;
-        color: $highlight;
-        text-shadow: -1px -1px 0 $dark, 1px -1px 0 $dark, -1px 1px 0 $dark,
-          1px 1px 0 $dark;
+        color: $c-highlight;
+        text-shadow: -1px -1px 0 $c-font-dark, 1px -1px 0 $c-font-dark,
+          -1px 1px 0 $c-font-dark, 1px 1px 0 $c-font-dark;
 
         @include respond-to(md) {
           font-size: $font-m;
@@ -109,6 +110,30 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
       flex-direction: column;
       align-items: center;
       margin-top: $space-xs;
+    }
+
+    .character {
+      height: 550px;
+
+      @include respond-to(md) {
+        height: 300px;
+      }
+    }
+  }
+
+  .info-container {
+    padding: $space-m;
+    border-radius: 5px;
+    grid-column: 1 / -1;
+    height: 100px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.02)
+    );
+
+    @include respond-to(md) {
+      grid-column: auto;
     }
   }
 }

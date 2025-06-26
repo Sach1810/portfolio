@@ -1,5 +1,5 @@
 <template>
-  <nav :class="[shouldExpand ? 'active' : '']">
+  <nav :class="[props.expanded ? 'active' : '']">
     <div class="nav-content">
       <div class="logo-area">
         <SachaSvg :animateWink="true" color="#227c9d" class="logo" />
@@ -23,7 +23,7 @@
     <div class="selector-container">
       <HamburgerToClose
         class="hamburger"
-        @clicked="shouldExpand = !shouldExpand"
+        @clicked="emit('toggle')"
         :color="iconColor"
       />
     </div>
@@ -31,15 +31,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { defineProps, defineEmits } from "vue";
 import HamburgerToClose from "@/components/icons/HamburgerToClose.vue";
 import NavRecord from "./NavRecord.vue";
 import { PhHouseLine, PhInfo, PhReadCvLogo } from "@phosphor-icons/vue";
 import SachaSvg from "@/components/SachaSvg.vue";
 
-const shouldExpand = ref(false);
+const props = defineProps({ expanded: Boolean });
+const emit = defineEmits(["toggle"]);
+
 const rootStyles = getComputedStyle(document.documentElement);
-const iconColor = rootStyles.getPropertyValue("--iconColor").trim();
+const iconColor = rootStyles.getPropertyValue("--c-font-light").trim();
 console.log("iconColor", iconColor);
 const navRecords = [
   {
@@ -62,77 +64,99 @@ const navRecords = [
 
 <style lang="scss" scoped>
 nav {
-  display: grid;
-  grid-template-columns: 0px 40px;
-  transition: grid-template-columns 0.5s ease;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 60px;
   z-index: 999;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
+  align-items: stretch;
 
   &.active {
-    grid-template-columns: 300px 20px;
+    width: 300px;
   }
 
   .nav-content {
-    overflow: hidden;
-    background: #004a68;
+    flex: 1 1 auto;
+    width: 100%;
     height: 100%;
-    text-align: left;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    background: $c-bg-dark;
+  }
+  &.active .nav-content {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
-    .logo-area {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: $space-m;
-      margin-left: -85px;
+  .logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $space-m;
+    margin-left: -100px;
 
-      .logo {
-        width: 125px;
-        height: 125px;
-      }
-
-      span {
-        font-size: 50px;
-        color: #ffffff;
-        font-weight: bold;
-        margin-left: -25px;
-      }
+    .logo {
+      $logo-size: $font-headline;
+      width: $logo-size;
+      height: $logo-size;
     }
 
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: $space-m;
-      padding: $space-m;
+    span {
+      font-size: $font-xl;
+      color: $c-font-light;
+      font-weight: bold;
+      margin-left: -25px;
+    }
+  }
 
-      a {
-        text-align: center;
-        text-decoration: none;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        transform-origin: center;
-        &:active {
-          opacity: 0.9;
-          transform: scale(1.02);
-        }
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: $space-m;
+    padding: $space-m;
 
-        &:hover {
-          background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.15),
-            rgba(255, 255, 255, 0)
-          );
-        }
+    a {
+      padding: 0 $space-m;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center;
+      &:active {
+        opacity: 0.9;
+        transform: scale(1.02);
+      }
+
+      &:hover {
+        border-radius: 5px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.15),
+          rgba(255, 255, 255, 0)
+        );
       }
     }
   }
 
   .selector-container {
-    pointer-events: none;
-    .hamburger {
-      pointer-events: auto;
-    }
+    flex: 0 0 60px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    right: 0;
+    pointer-events: auto;
   }
 }
 </style>
