@@ -1,22 +1,27 @@
 <template>
-  <h2>{{ activeStageData.title }}</h2>
   <div
     class="grid-wrapper"
     :style="gridWrapperStyle"
     tabindex="0"
     @keydown="handleKey"
+    @touchstart="handleTouchStart"
+    @touchend="handleTouchEnd"
   >
     <div class="grid" :style="gridStyle">
       <div v-for="index in gridSize * gridSize" :key="index" class="cell">
-        <Tree
-          v-if="treeCells.includes(index - 1)"
-          style="height: 100%; max-width: 100%"
-        />
-        <component
-          v-else-if="index - 1 === activeCellIndex"
-          :is="activeStageData.component"
-          style="height: 100%; max-width: 100%"
-        />
+        <Transition name="cell-svg" mode="out-in">
+          <Tree
+            v-if="treeCells.includes(index - 1)"
+            style="height: 100%; max-width: 100%"
+            :key="'tree-' + (index - 1)"
+          />
+          <component
+            v-else-if="index - 1 === activeCellIndex"
+            :is="activeStageData.component"
+            style="height: 100%; max-width: 100%"
+            :key="'stage-' + (index - 1)"
+          />
+        </Transition>
       </div>
     </div>
     <div class="image-wrapper" :style="imageWrapperStyle">
@@ -29,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import SachaCartoonArmsCrossed from "@/components/SachaCartoonArmsCrossed.vue";
 import SachaWalking from "@/components/svgs/SachaWalking.vue";
 import socketService from "@/services/SocketService";
@@ -43,7 +48,7 @@ const invertImg = ref(false);
 
 const gridSize = 7;
 const cellSize = 100; // px
-const gapSize = 2; // px
+const gapSize = 0; // px
 
 const gridWrapperStyle = computed(() => ({
   width: `${gridSize * (cellSize + gapSize)}px`,
@@ -84,7 +89,7 @@ function handleIsWalking() {
   clearTimeout(timeoutId);
   timeoutId = setTimeout(() => {
     isWalking.value = false;
-  }, 500);
+  }, 200);
 }
 
 let switchTimeoutId = null;
@@ -227,24 +232,80 @@ function randomizeComponentAndCell() {
 
 onMounted(() => {
   randomizeComponentAndCell();
+  const el = document.querySelector(".grid-wrapper");
+  if (el) {
+    el.addEventListener("touchmove", preventScroll, { passive: false });
+  }
 });
+
+onUnmounted(() => {
+  const el = document.querySelector(".grid-wrapper");
+  if (el) {
+    el.removeEventListener("touchmove", preventScroll);
+  }
+});
+
+// --- SWIPE SUPPORT FOR MOBILE ---
+let touchStartX = 0;
+let touchStartY = 0;
+
+function handleTouchStart(e) {
+  if (e.touches && e.touches.length === 1) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }
+}
+
+function handleTouchEnd(e) {
+  if (!touchStartX && !touchStartY) return;
+  let touchEndX, touchEndY;
+  if (e.changedTouches && e.changedTouches.length === 1) {
+    touchEndX = e.changedTouches[0].clientX;
+    touchEndY = e.changedTouches[0].clientY;
+  } else {
+    return;
+  }
+  const dx = touchEndX - touchStartX;
+  const dy = touchEndY - touchStartY;
+  if (Math.abs(dx) < 30 && Math.abs(dy) < 30) return; // ignore small swipes
+  if (Math.abs(dx) > Math.abs(dy)) {
+    // horizontal swipe
+    if (dx > 0) updatePosition("right");
+    else updatePosition("left");
+  } else {
+    // vertical swipe
+    if (dy > 0) updatePosition("down");
+    else updatePosition("up");
+  }
+  touchStartX = 0;
+  touchStartY = 0;
+}
+
+// --- Prevent page scroll on mobile swipe ---
+function preventScroll(e) {
+  e.preventDefault();
+}
 </script>
 
 <style lang="scss" scoped>
+$c-grid: #f6dfb9;
+$c-outline: #e6c89d;
 .grid-wrapper {
   position: relative;
   outline: none;
+  outline: 10px solid $c-outline;
+  border-radius: 3px;
   margin: 100px;
   .grid {
     display: grid;
-    background: #333;
+    background: $c-outline;
     position: absolute;
     top: 0;
     left: 0;
 
     .cell {
-      background: white;
-      border: 1px solid #ccc;
+      background: $c-grid;
+      border: 1px solid $c-outline;
       text-align: center;
     }
   }
@@ -263,5 +324,20 @@ onMounted(() => {
       pointer-events: none;
     }
   }
+}
+
+.cell-svg-enter-active,
+.cell-svg-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+.cell-svg-enter-from,
+.cell-svg-leave-to {
+  opacity: 0;
+  transform: scale(0.7);
+}
+.cell-svg-enter-to,
+.cell-svg-leave-from {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>

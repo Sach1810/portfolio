@@ -1,7 +1,5 @@
 <template>
-  <!-- <div class="walk-wrapper"> -->
   <component :is="currentComponent" />
-  <!-- </div> -->
 </template>
 
 <script setup>
