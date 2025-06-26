@@ -22,12 +22,27 @@
             <p>
               A very basic game that can use a mobile phone as a controller
               based on the phones movement (also keyboard compatible). Loosly
-              based on Snake
+              based on Snake. Not mobile device compatable
             </p>
           </div>
           <ul>
             <li>Websockets</li>
             <li>devicemotion api</li>
+          </ul>
+          <div>
+            <QrCode /><span
+              >Scan with mobile to play or click to use keyboard</span
+            >
+          </div>
+        </div>
+        <div class="work-item">
+          <div>
+            <h1>Target shooter</h1>
+            <p>Use your fingers to shoot the targets on the screen.</p>
+          </div>
+          <ul>
+            <li>Tensorflow js</li>
+            <li>MediaDevices api</li>
           </ul>
         </div>
         <div class="work-item">
@@ -54,19 +69,32 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
 <style lang="scss" scoped>
 .home-page {
   display: grid;
-  grid-template-columns: repeat(2, max-content);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   min-height: 100dvh;
-  align-content: center;
+  align-content: start;
   padding: $page-padding;
   gap: $space-l;
   justify-content: center;
   font-weight: normal;
+  max-width: 100vw;
+  max-width: 1300px;
+  margin: 0 auto;
 
   @include respond-to(md) {
     $padding-t-b: $page-padding * 1.5;
     grid-template-columns: 1fr;
     align-content: center;
     padding: $padding-t-b $nav-closed-width $padding-t-b 0;
+  }
+
+  .content,
+  .image-container,
+  .info-container {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
   }
 
   .content {
@@ -132,6 +160,8 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
   }
 
   .image-container {
+    display: flex;
+    justify-content: center;
     @include respond-to(md) {
       margin-top: 0;
       display: flex;
