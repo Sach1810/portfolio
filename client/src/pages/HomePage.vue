@@ -57,7 +57,7 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
       line-height: 1.5;
       margin-top: $space-l;
       @include respond-to(md) {
-        padding: 0 $space-xl;
+        text-align: center;
       }
     }
 
@@ -74,7 +74,7 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
         flex-direction: column;
         align-items: center;
         font-size: $font-headline-s;
-        margin-top: $space-m;
+        margin-top: 0;
       }
 
       .name {
@@ -98,6 +98,7 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
 
         @include respond-to(md) {
           font-size: $font-m;
+          letter-spacing: 0.11rem;
         }
       }
     }
