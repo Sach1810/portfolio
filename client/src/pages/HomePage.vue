@@ -1,5 +1,6 @@
 <template>
   <div class="home-page">
+    <QrCode />
     <div class="content">
       <div class="name-container">
         <div class="name">Sacha</div>

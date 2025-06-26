@@ -142,12 +142,9 @@ const handleKey = (e) => {
 };
 
 socketService.on("updateJobSearch", (data) => {
-  console.log("Received response:", data);
-
   updatePosition(data.direction);
 });
 
-// --- New logic for random component in random cell ---
 const components = [ApplyForJobSvg, InterviewSvg, AcceptSvg];
 const activeComponentIndex = ref(Math.floor(Math.random() * components.length));
 const activeComponent = computed(() => components[activeComponentIndex.value]);
@@ -160,7 +157,7 @@ const activeStageData = computed(() => {
 
   return stagesData[activeComponentIndex.value];
 });
-// Helper to get a random cell index that is not the character's position
+
 function getRandomCellIndex() {
   const charIndex = y.value * gridSize + x.value;
   let available = [];
@@ -173,7 +170,6 @@ function getRandomCellIndex() {
 
 const activeCellIndex = ref(getRandomCellIndex());
 
-// Function to randomize component and cell
 function randomizeComponentAndCell() {
   activeComponentIndex.value = Math.floor(Math.random() * components.length);
   activeCellIndex.value = getRandomCellIndex();

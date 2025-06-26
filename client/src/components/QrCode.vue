@@ -7,21 +7,18 @@ import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import QRCodeStyling from "qr-code-styling";
 import socketService from "@/services/SocketService";
-
 const route = useRoute();
 const router = useRouter();
 
 const qrCodeRef = ref(null);
-const desitnationUrl =
-  process.env.NODE_ENV === "production"
-    ? "https://sachadavid.dev/#"
-    : "https://192.168.86.27:5173/#";
+
+const desitnationUrl = `${window.location.origin}/#/controller`;
 
 const options = ref({
   width: 115,
   height: 115,
   type: "svg",
-  data: `${desitnationUrl}/controller`,
+  data: desitnationUrl,
   image: "/sad.ico",
   margin: 0,
   qrOptions: {
@@ -55,10 +52,8 @@ const options = ref({
 });
 
 const qrCode = new QRCodeStyling(options.value);
-
-// Update QR code data when socket connects
 socketService.onConnect((socketId) => {
-  options.value.data = `${desitnationUrl}/controller?socketId=${socketId}`;
+  options.value.data = `${desitnationUrl}?socketId=${socketId}`;
 });
 
 onMounted(() => {

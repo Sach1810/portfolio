@@ -2,10 +2,7 @@ import { io } from "socket.io-client";
 
 class SocketService {
   constructor() {
-    const socketUrl =
-      process.env.NODE_ENV === "production"
-        ? undefined
-        : "https://192.168.86.27:3000";
+    const socketUrl = `${window.location.protocol}//${window.location.hostname}:3000`; //TODO port needs to be dynamic as in production mode wont have it
     this.socket = io(socketUrl);
     this.connected = false;
     this.socketId = null;

@@ -2,7 +2,7 @@
   <nav :class="[shouldExpand ? 'active' : '']">
     <div class="nav-content">
       <div class="logo-area">
-        <SachaSvg animateWink="true" color="#227c9d" class="logo" />
+        <SachaSvg :animateWink="true" color="#227c9d" class="logo" />
         <span>S.A.D</span>
       </div>
 
@@ -86,11 +86,11 @@ nav {
       align-items: center;
       justify-content: center;
       padding: $space-m;
-      margin-left: -60px;
+      margin-left: -85px;
 
       .logo {
-        width: 150px;
-        height: 150px;
+        width: 125px;
+        height: 125px;
       }
 
       span {

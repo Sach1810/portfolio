@@ -27,8 +27,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
-
 const props = defineProps({
   size: { type: String, default: "40px" },
   isOpen: { type: Boolean, default: false },
