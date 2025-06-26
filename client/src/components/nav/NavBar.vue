@@ -42,7 +42,6 @@ const emit = defineEmits(["toggle"]);
 
 const rootStyles = getComputedStyle(document.documentElement);
 const iconColor = rootStyles.getPropertyValue("--c-font-light").trim();
-console.log("iconColor", iconColor);
 const navRecords = [
   {
     icon: PhHouseLine,

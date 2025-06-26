@@ -18,7 +18,7 @@
       @pdfContent="pdfContent = $event"
       ref="pdfContent"
       :forPrint="true"
-      style="z-index: -100"
+      style="z-index: -100; position: fixed; top: -1000px; left: -1000px"
     />
   </div>
 </template>
@@ -95,7 +95,7 @@ async function printPDF() {
 }
 
 const rootStyles = getComputedStyle(document.documentElement);
-const iconColor = rootStyles.getPropertyValue("--c-icon-primary").trim();
+const iconColor = rootStyles.getPropertyValue("--c-font-light").trim();
 const iconSize = 32;
 const iconWeight = "bold";
 const icons = [
