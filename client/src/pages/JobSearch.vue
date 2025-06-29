@@ -11,8 +11,10 @@
       </p>
     </div>
     <div class="controller">
+      <h2>How to play?</h2>
       <div class="qr-guide">
-        <QrCode /><ControlInstructions class="guide" />
+        <QrCode />
+        <div class="guide-container"><ControlInstructions class="guide" /></div>
       </div>
       <span
         >Scan to connect phone as controller. Point phone directly at screen and
@@ -106,7 +108,7 @@ const iconColor = rootStyles.getPropertyValue("--c-font-light").trim();
 const isWalking = ref(false);
 const invertImg = ref(false);
 
-const gridSize = isMobile ? 7 : 7;
+const gridSize = isMobile ? 5 : 7;
 const cellSize = isMobile ? 50 : 100; // px
 const gapSize = 0; // px
 
@@ -361,6 +363,13 @@ function preventScroll(e) {
   max-width: 700px;
   margin: 0 auto;
   gap: $space-l;
+  padding: $space-l $nav-closed-width $space-xxl * 2.5 0;
+
+  @include respond-to(md) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   .title {
     grid-area: title;
@@ -385,10 +394,23 @@ function preventScroll(e) {
       justify-content: center;
       gap: $space-l;
       width: max-content;
+      @include respond-to(md) {
+        margin: 0 auto;
+      }
 
-      .guide {
-        height: 100px;
-        width: 100px;
+      .guide-container {
+        padding: $space-s;
+        border-radius: 10px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.35),
+          rgba(255, 255, 255, 0.15)
+        );
+
+        .guide {
+          height: 100px;
+          width: 100px;
+        }
       }
     }
   }
@@ -400,10 +422,21 @@ function preventScroll(e) {
     gap: $space-s;
     width: max-content;
 
+    @include respond-to(md) {
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+    }
+
     .divider-line {
       height: 100%;
       width: 1px;
       background-color: $c-font-light;
+
+      @include respond-to(md) {
+        height: 1px;
+        width: 100%;
+      }
     }
   }
   .controls {
