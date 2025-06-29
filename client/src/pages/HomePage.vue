@@ -16,40 +16,48 @@
     </div>
     <div class="info-container">
       <section class="work-container">
-        <div class="work-item">
-          <div>
-            <h1>Job Search Game</h1>
-            <p>
-              A very basic game that can use a mobile phone as a controller
-              based on the phones movement (also keyboard compatible). Loosly
-              based on Snake. Not mobile device compatable
-            </p>
+        <router-link to="/jobsearch">
+          <div class="work-item">
+            <div class="title">
+              <h1>Job Search</h1>
+            </div>
+            <div class="image"><InterviewSvg style="width: 100%" /></div>
+            <div class="description">
+              <p>
+                A very basic game that can use a mobile phone as a controller
+                based on the phones movement (also keyboard/swipe compatible).
+                Loosly based on Snake. Get to the targets and avoid the trees
+                which block you. For the best experience move around by tilting
+                the phone.
+              </p>
+            </div>
+            <div class="tech">
+              <div>Websockets</div>
+              <div>devicemotion api</div>
+              <div>Vue 3</div>
+              <div>Scss</div>
+              <div>Vite</div>
+            </div>
           </div>
-          <ul>
-            <li>Websockets</li>
-            <li>devicemotion api</li>
-          </ul>
-        </div>
-        <div class="work-item">
-          <div>
-            <h1>Target shooter</h1>
-            <p>Use your fingers to shoot the targets on the screen.</p>
+        </router-link>
+        <router-link to="/targetshooter">
+          <div class="work-item">
+            <div class="title">
+              <h1>Target shooter</h1>
+            </div>
+            <div class="image"><TargetShooterSvg style="width: 100%" /></div>
+            <div class="tech">
+              <div>Tensorflow js</div>
+              <div>MediaDevices api</div>
+              <div>Vue 3</div>
+              <div>Scss</div>
+              <div>Vite</div>
+            </div>
+            <div class="description">
+              <p>Use your fingers to shoot the targets on the screen.</p>
+            </div>
           </div>
-          <ul>
-            <li>Tensorflow js</li>
-            <li>MediaDevices api</li>
-          </ul>
-        </div>
-        <div class="work-item">
-          <div>
-            <h1>Target shooter</h1>
-            <p>Use your fingers to shoot the targets on the screen.</p>
-          </div>
-          <ul>
-            <li>Tensorflow js</li>
-            <li>MediaDevices api</li>
-          </ul>
-        </div>
+        </router-link>
       </section>
     </div>
   </div>
@@ -58,6 +66,8 @@
 <script setup>
 import { ref } from "vue";
 import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
+import InterviewSvg from "@/components/jobsearch/InterviewSvg.vue";
+import TargetShooterSvg from "@/components/svgs/TargetShooterSvg.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -186,12 +196,40 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
     .work-container {
       display: flex;
       flex-direction: column;
-      gap: $space-m;
+      gap: $space-l;
+      font-size: $font-m;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        outline: none;
+
+        &:hover {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        &:focus {
+          text-decoration: none;
+          color: inherit;
+          outline: none;
+        }
+
+        &:visited {
+          text-decoration: none;
+          color: inherit;
+        }
+      }
 
       .work-item {
         display: grid;
-        grid-template-columns: 1fr max-content;
-        gap: $space-xl;
+        grid-template-areas:
+          "title title"
+          "image description"
+          "tech tech";
+        grid-template-columns: 200px 1fr;
+        grid-template-rows: auto auto auto;
+        gap: $space-m;
         padding: $space-l;
         border-radius: 5px;
         background: linear-gradient(
@@ -199,6 +237,54 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
           rgba(255, 255, 255, 0.15),
           rgba(255, 255, 255, 0.02)
         );
+
+        @include respond-to(md) {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: $space-m;
+        }
+
+        .title {
+          grid-area: title;
+          background: $c-bg-darker;
+          padding: $space-s;
+          font-size: $font-m;
+          width: 100%;
+
+          background: linear-gradient(
+            135deg,
+            rgba(33, 77, 86, 0.55),
+            rgba(33, 77, 86, 0.15)
+          );
+          border-radius: 5px;
+        }
+        .image {
+          grid-area: image;
+        }
+        .tech {
+          grid-area: tech;
+          display: flex;
+          flex-wrap: wrap;
+          gap: $space-m;
+          width: 100%;
+
+          > div {
+            flex-shrink: 0;
+            white-space: nowrap;
+          }
+
+          @include respond-to(md) {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: $space-xs $space-l;
+            width: 100%;
+          }
+        }
+        .description {
+          grid-area: description;
+        }
       }
     }
   }
