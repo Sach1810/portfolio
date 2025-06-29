@@ -45,7 +45,7 @@
       <span v-if="isMobile"><strong>Swipe</strong> to move character</span>
       <span v-else>Use the <strong>arrow keys</strong> to move character</span>
     </div>
-    <div class="game">
+    <div class="game" ref="gameBoard">
       <div
         class="grid-wrapper"
         :style="gridWrapperStyle"
@@ -107,6 +107,9 @@ const iconColor = rootStyles.getPropertyValue("--c-font-light").trim();
 
 const isWalking = ref(false);
 const invertImg = ref(false);
+
+// Add ref for game board element
+const gameBoard = ref(null);
 
 const gridSize = isMobile ? 5 : 7;
 const cellSize = isMobile ? 50 : 100; // px
@@ -220,6 +223,69 @@ socketService.on("updateJobSearch", (data) => {
   updatePosition(data.direction);
 });
 
+// Listen for controller connection to scroll to game board
+socketService.on("startJobSearch", (data) => {
+  console.log("Controller connected, scrolling to game board", data);
+  scrollToGameBoard();
+});
+
+// Also listen for any controller connection event
+socketService.on("controllerConnected", (data) => {
+  console.log("Controller connected event received", data);
+  scrollToGameBoard();
+});
+
+// Function to scroll to game board
+function scrollToGameBoard() {
+  console.log("scrollToGameBoard called");
+
+  // Simple approach - find the game element and scroll to it
+  const gameElement = document.querySelector(".game");
+  console.log("Found game element:", gameElement);
+
+  if (gameElement) {
+    console.log("Game element found, attempting to scroll");
+
+    // Method 1: Try scrollIntoView first
+    try {
+      gameElement.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
+      console.log("scrollIntoView executed");
+    } catch (e) {
+      console.log("scrollIntoView failed:", e);
+
+      // Method 2: Use window.scrollTo with getBoundingClientRect
+      try {
+        const rect = gameElement.getBoundingClientRect();
+        const scrollTop =
+          window.pageYOffset +
+          rect.top -
+          window.innerHeight / 2 +
+          rect.height / 2;
+
+        window.scrollTo({
+          top: scrollTop,
+          behavior: "smooth",
+        });
+        console.log("window.scrollTo executed to position:", scrollTop);
+      } catch (e2) {
+        console.log("window.scrollTo also failed:", e2);
+
+        // Method 3: Force scroll with immediate positioning
+        const rect = gameElement.getBoundingClientRect();
+        const scrollTop = window.pageYOffset + rect.top - 100;
+        window.scrollTo(0, scrollTop);
+        console.log("Forced scroll to position:", scrollTop);
+      }
+    }
+  } else {
+    console.log("Game element not found");
+  }
+}
+
 const components = [ApplyForJobSvg, InterviewSvg, AcceptSvg];
 const activeComponentIndex = ref(Math.floor(Math.random() * components.length));
 const activeComponent = computed(() => components[activeComponentIndex.value]);
@@ -300,6 +366,18 @@ onMounted(() => {
     el.addEventListener("touchmove", preventScroll, { passive: false });
   }
   window.addEventListener("keydown", handleKey);
+
+  // Debug socket connection
+  console.log(
+    "JobSearch mounted, socket connected:",
+    socketService.isConnected()
+  );
+  console.log("Current socket ID:", socketService.getSocketId());
+
+  // Listen for socket connection to ensure QR code gets updated
+  socketService.onConnect((socketId) => {
+    console.log("Socket connected in JobSearch, ID:", socketId);
+  });
 });
 
 onUnmounted(() => {
@@ -364,6 +442,8 @@ function preventScroll(e) {
   margin: 0 auto;
   gap: $space-l;
   padding: $space-l $nav-closed-width $space-xxl * 2.5 0;
+  min-height: 120vh; /* Ensure there's enough content to scroll */
+  overflow-y: auto; /* Ensure vertical scrolling is enabled */
 
   @include respond-to(md) {
     display: flex;

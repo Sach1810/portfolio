@@ -1,3 +1,4 @@
+import Bowser from "bowser";
 class TiltDetectorService {
   constructor(options = {}) {
     this.threshold = { x: 1, y: 3 };
@@ -12,20 +13,45 @@ class TiltDetectorService {
     this.lastDirection = null;
 
     this.handleMotion = this.handleMotion.bind(this);
+
+    const result = Bowser.parse(window.navigator.userAgent);
+    this.isMobile = result.platform.type === "mobile";
   }
 
-  start() {
-    if (typeof DeviceMotionEvent.requestPermission === "function") {
-      DeviceMotionEvent.requestPermission().then((response) => {
+  isSupported() {
+    return (
+      !!this.isMobile &&
+      ((typeof DeviceMotionEvent !== "undefined" &&
+        typeof DeviceMotionEvent.requestPermission === "function") ||
+        (this.isMobile && window.DeviceMotionEvent))
+    );
+  }
+
+  async start() {
+    try {
+      if (typeof DeviceMotionEvent.requestPermission === "function") {
+        const response = await DeviceMotionEvent.requestPermission();
         if (response === "granted") {
           window.addEventListener("devicemotion", this.handleMotion);
+          console.log("Hold phone pointing at screen to calibrate center...");
+          return {};
+        } else {
+          return {
+            error: "Permission not granted",
+            type: "access-denied",
+          };
         }
-      });
-    } else {
-      window.addEventListener("devicemotion", this.handleMotion);
+      } else {
+        window.addEventListener("devicemotion", this.handleMotion);
+        console.log("Hold phone pointing at screen to calibrate center...");
+        return {};
+      }
+    } catch (e) {
+      return {
+        error: e.message || "Unknown error occurred",
+        type: "error",
+      };
     }
-
-    console.log("Hold phone pointing at screen to calibrate center...");
   }
 
   stop() {

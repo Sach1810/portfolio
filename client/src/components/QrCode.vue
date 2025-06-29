@@ -60,11 +60,20 @@ onMounted(() => {
   if (qrCodeRef.value) {
     qrCode.append(qrCodeRef.value);
   }
+
+  if (socketService.isConnected()) {
+    const socketId = socketService.getSocketId();
+    if (socketId) {
+      options.value.data = `${desitnationUrl}?socketId=${socketId}`;
+    }
+  } else {
+    console.log("QrCode: Socket not connected on mount");
+  }
 });
 
 watch(
   () => options.value.data,
-  () => {
+  (newData) => {
     qrCode.update(options.value);
   }
 );
