@@ -29,11 +29,6 @@
             <li>Websockets</li>
             <li>devicemotion api</li>
           </ul>
-          <div>
-            <QrCode /><span
-              >Scan with mobile to play or click to use keyboard</span
-            >
-          </div>
         </div>
         <div class="work-item">
           <div>
@@ -62,7 +57,6 @@
 
 <script setup>
 import { ref } from "vue";
-import QrCode from "../components/QrCode.vue";
 import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
 </script>
 
