@@ -446,7 +446,7 @@ function preventScroll(e) {
   max-width: 700px;
   margin: 0 auto;
   gap: $space-l;
-  padding: $space-l $nav-closed-width $space-xxl * 2.5 0;
+  padding: $space-l 0 $space-xxl * 2.5;
   min-height: 120vh; /* Ensure there's enough content to scroll */
   overflow-y: auto; /* Ensure vertical scrolling is enabled */
 

@@ -58,6 +58,7 @@ const navExpanded = ref(false);
     overflow-x: hidden;
     min-width: 0;
     position: relative;
+    margin-right: $nav-closed-width;
   }
 }
 </style>

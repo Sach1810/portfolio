@@ -78,7 +78,7 @@ import SachaCartoonArmsCrossed from "../components/SachaCartoonArmsCrossed.vue";
     $padding-t-b: $page-padding * 1.5;
     grid-template-columns: 1fr;
     align-content: center;
-    padding: $padding-t-b $nav-closed-width $padding-t-b 0;
+    padding: $padding-t-b 0;
   }
 
   .content,
