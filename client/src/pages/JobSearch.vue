@@ -10,10 +10,10 @@
         <strong>controller</strong>
       </p>
     </div>
+    <h2 class="how">How to play?</h2>
     <div class="controller">
-      <h2>How to play?</h2>
       <div class="qr-guide">
-        <QrCode />
+        <QrCode :socketId="socketId" />
         <div class="guide-container"><ControlInstructions class="guide" /></div>
       </div>
       <span
@@ -110,6 +110,9 @@ const invertImg = ref(false);
 
 // Add ref for game board element
 const gameBoard = ref(null);
+
+// Add reactive socketId ref
+const socketId = ref(null);
 
 const gridSize = isMobile ? 5 : 7;
 const cellSize = isMobile ? 50 : 100; // px
@@ -375,8 +378,9 @@ onMounted(() => {
   console.log("Current socket ID:", socketService.getSocketId());
 
   // Listen for socket connection to ensure QR code gets updated
-  socketService.onConnect((socketId) => {
-    console.log("Socket connected in JobSearch, ID:", socketId);
+  socketService.onConnect((newSocketId) => {
+    console.log("Socket connected in JobSearch, ID:", newSocketId);
+    socketId.value = newSocketId;
   });
 });
 
@@ -436,6 +440,7 @@ function preventScroll(e) {
   grid-template-areas:
     "title title image"
     "instructions instructions image"
+    "how how how"
     "controller divider controls"
     "game game game";
   max-width: 700px;
@@ -460,7 +465,9 @@ function preventScroll(e) {
   .instructions {
     grid-area: instructions;
   }
-
+  .how {
+    grid-area: how;
+  }
   .controller {
     grid-area: controller;
     display: flex;

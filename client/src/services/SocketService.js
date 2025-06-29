@@ -8,11 +8,19 @@ class SocketService {
     this.socketId = null;
 
     this.socket.on("connect", () => {
-      console.log("connet");
+      console.log("SocketService: Connected to server");
       this.connected = true;
       this.socketId = this.socket.id;
-      console.log("Socket Id :", this.socketId);
-      if (this.onConnectCallback) this.onConnectCallback(this.socketId);
+      console.log("SocketService: Socket Id :", this.socketId);
+      if (this.onConnectCallback) {
+        console.log(
+          "SocketService: Calling onConnect callback with ID:",
+          this.socketId
+        );
+        this.onConnectCallback(this.socketId);
+      } else {
+        console.log("SocketService: No onConnect callback registered");
+      }
     });
 
     this.socket.on("disconnect", () => {
@@ -22,7 +30,16 @@ class SocketService {
   }
 
   onConnect(callback) {
+    console.log("SocketService: Registering onConnect callback");
     this.onConnectCallback = callback;
+    // If already connected, call the callback immediately
+    if (this.connected && this.socketId) {
+      console.log(
+        "SocketService: Already connected, calling callback immediately with ID:",
+        this.socketId
+      );
+      callback(this.socketId);
+    }
   }
 
   onDisconnect(callback) {

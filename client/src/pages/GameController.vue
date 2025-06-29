@@ -30,7 +30,12 @@
             <li>Rotate wrist to move sideways (roll)</li>
             <li>Tilt nose of phone to move up and down (pitch)</li>
           </ol>
-          <div class="btn start" @click="startGyro">Start</div>
+          <div
+            :class="['btn start', hasGyroStarted ? 'disabled' : null]"
+            @click="startGyro"
+          >
+            Start
+          </div>
           <div v-if="error" class="error">{{ error }}</div>
           <ControlInstructions class="guide" />
         </div>
@@ -101,8 +106,8 @@ const tiltService = new TiltDetectorService({
   },
 });
 const error = ref(null);
-// const isGyroSupported = ref(tiltService.isSupported());
-const isGyroSupported = ref(true);
+const isGyroSupported = ref(tiltService.isSupported());
+const hasGyroStarted = ref(false);
 if (!isGyroSupported.value) {
   error.value = "Gyroscope not supported";
 }
@@ -112,6 +117,7 @@ const controllerType = ref(isGyroSupported.value ? "gyroscope" : "keypad");
 
 async function handleType(type) {
   tiltService.stop();
+  hasGyroStarted.value = false;
   if (type === "gyroscope") {
     if (!isGyroSupported.value) return;
   }
@@ -128,8 +134,10 @@ async function startGyro() {
         ? "Gyroscope permission denied. Please allow motion access or switch to keypad."
         : "Error starting gyroscope. Please switch to keypad.";
     error.value = msg;
+    return;
   } else {
-    error.value = null; // Clear any previous errors
+    error.value = null;
+    hasGyroStarted.value = true;
   }
 }
 
@@ -165,7 +173,7 @@ let lastUpdate = 0;
 <style lang="scss" scoped>
 .game-controller {
   height: 100dvh;
-  width: 100%;
+  width: calc(100% - $nav-closed-width);
   margin-right: $nav-closed-width;
   display: flex;
   align-items: center;
@@ -246,11 +254,12 @@ let lastUpdate = 0;
         gap: 10px;
         width: 100%;
         height: 100%;
+        margin-top: -$space-xxl * 3;
 
         .arrow-keys {
           display: grid;
-          grid-template-columns: repeat(3, max-content);
-          grid-template-rows: repeat(3, max-content);
+          grid-template-columns: 80px 80px 80px;
+          grid-template-rows: 80px 80px 80px;
           justify-content: center;
           align-items: center;
           grid-template-areas:
@@ -258,18 +267,32 @@ let lastUpdate = 0;
             "left . right"
             ". down .";
           gap: 20px;
+          width: fit-content;
+          margin: 0 auto;
 
           .arrow-up {
             grid-area: up;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
           .arrow-left {
             grid-area: left;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
           .arrow-down {
             grid-area: down;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
           .arrow-right {
             grid-area: right;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         }
       }
@@ -289,7 +312,7 @@ let lastUpdate = 0;
       border-radius: 5px;
 
       &.start {
-        width: 80vw;
+        width: 70vw;
         border: 2px solid $c-font-light;
         font-size: $font-xl;
         margin-top: $space-m;

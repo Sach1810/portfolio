@@ -14,11 +14,18 @@ const qrCodeRef = ref(null);
 
 const desitnationUrl = `${window.location.origin}/#/controller`;
 
+const props = defineProps({
+  socketId: {
+    type: String,
+    required: true,
+  },
+});
+
 const options = ref({
   width: 115,
   height: 115,
   type: "svg",
-  data: desitnationUrl,
+  data: `${desitnationUrl}?socketId=${props.socketId}`,
   image: "/sad.ico",
   margin: 0,
   qrOptions: {
@@ -51,30 +58,27 @@ const options = ref({
   },
 });
 
+function updateQrCodeData() {
+  options.value.data = `${desitnationUrl}?socketId=${props.socketId}`;
+  qrCode.update(options.value);
+}
+
 const qrCode = new QRCodeStyling(options.value);
-socketService.onConnect((socketId) => {
-  options.value.data = `${desitnationUrl}?socketId=${socketId}`;
-});
 
 onMounted(() => {
   if (qrCodeRef.value) {
     qrCode.append(qrCodeRef.value);
   }
-
-  if (socketService.isConnected()) {
-    const socketId = socketService.getSocketId();
-    if (socketId) {
-      options.value.data = `${desitnationUrl}?socketId=${socketId}`;
-    }
-  } else {
-    console.log("QrCode: Socket not connected on mount");
-  }
+  updateQrCodeData();
 });
 
 watch(
-  () => options.value.data,
-  (newData) => {
-    qrCode.update(options.value);
+  () => props.socketId,
+  (newSocketId) => {
+    if (newSocketId) {
+      options.value.data = `${desitnationUrl}?socketId=${newSocketId}`;
+      qrCode.update(options.value);
+    }
   }
 );
 
