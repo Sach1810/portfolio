@@ -1,59 +1,77 @@
 <template>
-  <div>
-    <h1>Job Search</h1>
-    <InterviewSvg style="width: 200px" />
-    <p>
-      Join Sacha on his job hunt. Get to the targets and avoid the trees. For
-      the full experience you will need a computer and mobile device to use as a
-      <strong>controller</strong>
-    </p>
-    <div v-if="isMobile">Swipe to move character</div>
-    <div v-else></div>
-    <div>
-      <QrCode /><span>Scan to connect phone as controller</span
-      ><span>Dont have a phone use the arrows on the keyboard</span>
+  <div class="job-search-container">
+    <div class="title"><h1>Job Search</h1></div>
+    <div class="image"><InterviewSvg style="width: 200px" /></div>
+    <div class="instructions">
+      <p>
+        Join Sacha on his job hunt. Get to the targets and avoid the trees. For
+        the full experience you will need a computer and mobile device to use as
+        a
+        <strong>controller</strong>
+      </p>
     </div>
-    <div class="arrow-keys">
-      <div class="arrow-up">
-        <PhArrowSquareUp :size="50" :color="iconColor" weight="fill" />
+    <div class="controller">
+      <div class="qr-guide">
+        <QrCode /><ControlInstructions class="guide" />
       </div>
-      <div class="arrow-left">
-        <PhArrowSquareLeft :size="50" :color="iconColor" weight="fill" />
-      </div>
-      <div class="arrow-down">
-        <PhArrowSquareDown :size="50" :color="iconColor" weight="fill" />
-      </div>
-      <div class="arrow-right">
-        <PhArrowSquareRight :size="50" :color="iconColor" weight="fill" />
-      </div>
+      <span
+        >Scan to connect phone as controller. Point phone directly at screen and
+        tilt the nose up and down to move up and down. Rotate wrist left and
+        right to move left and right.</span
+      >
     </div>
-    <div
-      class="grid-wrapper"
-      :style="gridWrapperStyle"
-      @touchstart="handleTouchStart"
-      @touchend="handleTouchEnd"
-    >
-      <div class="grid" :style="gridStyle">
-        <div v-for="index in gridSize * gridSize" :key="index" class="cell">
-          <Transition name="cell-svg" mode="out-in">
-            <Tree
-              v-if="treeCells.includes(index - 1)"
-              style="height: 100%; max-width: 100%"
-              :key="'tree-' + (index - 1)"
-            />
-            <component
-              v-else-if="index - 1 === activeCellIndex"
-              :is="activeStageData.component"
-              style="height: 100%; max-width: 100%"
-              :key="'stage-' + (index - 1)"
-            />
-          </Transition>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-text">OR</div>
+      <div class="divider-line"></div>
+    </div>
+    <div class="controls">
+      <div class="arrow-keys">
+        <div class="arrow-up">
+          <PhArrowSquareUp :size="50" :color="iconColor" weight="fill" />
+        </div>
+        <div class="arrow-left">
+          <PhArrowSquareLeft :size="50" :color="iconColor" weight="fill" />
+        </div>
+        <div class="arrow-down">
+          <PhArrowSquareDown :size="50" :color="iconColor" weight="fill" />
+        </div>
+        <div class="arrow-right">
+          <PhArrowSquareRight :size="50" :color="iconColor" weight="fill" />
         </div>
       </div>
-      <div class="image-wrapper" :style="imageWrapperStyle">
-        <div class="image" :style="imageStyle">
-          <SachaCartoonArmsCrossed v-if="!isWalking" style="height: 100%" />
-          <SachaWalking style="height: 100%" v-else />
+      <span v-if="isMobile"><strong>Swipe</strong> to move character</span>
+      <span v-else>Use the <strong>arrow keys</strong> to move character</span>
+    </div>
+    <div class="game">
+      <div
+        class="grid-wrapper"
+        :style="gridWrapperStyle"
+        @touchstart="handleTouchStart"
+        @touchend="handleTouchEnd"
+      >
+        <div class="grid" :style="gridStyle">
+          <div v-for="index in gridSize * gridSize" :key="index" class="cell">
+            <Transition name="cell-svg" mode="out-in">
+              <Tree
+                v-if="treeCells.includes(index - 1)"
+                style="height: 100%; max-width: 100%"
+                :key="'tree-' + (index - 1)"
+              />
+              <component
+                v-else-if="index - 1 === activeCellIndex"
+                :is="activeStageData.component"
+                style="height: 100%; max-width: 100%"
+                :key="'stage-' + (index - 1)"
+              />
+            </Transition>
+          </div>
+        </div>
+        <div class="image-wrapper" :style="imageWrapperStyle">
+          <div class="image" :style="imageStyle">
+            <SachaCartoonArmsCrossed v-if="!isWalking" style="height: 100%" />
+            <SachaWalking style="height: 100%" v-else />
+          </div>
         </div>
       </div>
     </div>
@@ -65,9 +83,9 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import SachaCartoonArmsCrossed from "@/components/SachaCartoonArmsCrossed.vue";
 import SachaWalking from "@/components/svgs/SachaWalking.vue";
 import socketService from "@/services/SocketService";
-import ApplyForJobSvg from "@/components/jobserach/ApplyForJobSvg.vue";
-import InterviewSvg from "@/components/jobserach/InterviewSvg.vue";
-import AcceptSvg from "@/components/jobserach/AcceptSvg.vue";
+import ApplyForJobSvg from "@/components/jobsearch/ApplyForJobSvg.vue";
+import InterviewSvg from "@/components/jobsearch/InterviewSvg.vue";
+import AcceptSvg from "@/components/jobsearch/AcceptSvg.vue";
 import Tree from "@/components/svgs/TreeSvg.vue";
 import QrCode from "@/components/QrCode.vue";
 import Bowser from "bowser";
@@ -77,6 +95,7 @@ import {
   PhArrowSquareLeft,
   PhArrowSquareRight,
 } from "@phosphor-icons/vue";
+import ControlInstructions from "@/components/svgs/ControlInstructions.vue";
 
 const result = Bowser.parse(window.navigator.userAgent);
 const isMobile = result.platform.type === "mobile";
@@ -332,80 +351,148 @@ function preventScroll(e) {
 </script>
 
 <style lang="scss" scoped>
-.arrow-keys {
+.job-search-container {
   display: grid;
-  grid-template-columns: repeat(3, max-content);
-  grid-template-rows: repeat(2, max-content);
-  justify-content: center;
-  align-items: center;
   grid-template-areas:
-    ". up ."
-    "left down right";
+    "title title image"
+    "instructions instructions image"
+    "controller divider controls"
+    "game game game";
+  max-width: 700px;
+  margin: 0 auto;
+  gap: $space-l;
 
-  .arrow-up {
-    grid-area: up;
+  .title {
+    grid-area: title;
   }
-  .arrow-left {
-    grid-area: left;
+  .image {
+    grid-area: image;
   }
-  .arrow-down {
-    grid-area: down;
+  .instructions {
+    grid-area: instructions;
   }
-  .arrow-right {
-    grid-area: right;
-  }
-}
 
-$c-grid: #f6dfb9;
-$c-outline: #e6c89d;
+  .controller {
+    grid-area: controller;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-l;
 
-.grid-wrapper {
-  position: relative;
-  outline: 10px solid $c-bg-dark;
-  border-radius: 3px;
-  box-shadow: 0 0 10px 7px $c-highlight;
-  .grid {
-    display: grid;
-    background: $c-outline;
-    position: absolute;
-    top: 0;
-    left: 0;
+    .qr-guide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $space-l;
+      width: max-content;
 
-    .cell {
-      background: $c-grid;
-      border: 1px solid $c-outline;
-      text-align: center;
+      .guide {
+        height: 100px;
+        width: 100px;
+      }
     }
   }
+  .divider {
+    grid-area: divider;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-s;
+    width: max-content;
 
-  .image-wrapper {
-    transition: transform 300ms ease-in-out;
+    .divider-line {
+      height: 100%;
+      width: 1px;
+      background-color: $c-font-light;
+    }
+  }
+  .controls {
+    grid-area: controls;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-l;
 
-    .image {
-      position: absolute;
-      top: 0;
-      left: 0;
-
-      display: flex;
+    .arrow-keys {
+      display: grid;
+      grid-template-columns: repeat(3, max-content);
+      grid-template-rows: repeat(2, max-content);
       justify-content: center;
       align-items: center;
-      pointer-events: none;
+      grid-template-areas:
+        ". up ."
+        "left down right";
+      height: 120px;
+
+      .arrow-up {
+        grid-area: up;
+      }
+      .arrow-left {
+        grid-area: left;
+      }
+      .arrow-down {
+        grid-area: down;
+      }
+      .arrow-right {
+        grid-area: right;
+      }
     }
   }
-}
 
-.cell-svg-enter-active,
-.cell-svg-leave-active {
-  transition: opacity 0.2s, transform 0.2s;
-}
-.cell-svg-enter-from,
-.cell-svg-leave-to {
-  opacity: 0;
-  transform: scale(0.7);
-}
-.cell-svg-enter-to,
-.cell-svg-leave-from {
-  opacity: 1;
-  transform: scale(1);
+  .game {
+    grid-area: game;
+    $c-grid: #f6dfb9;
+    $c-outline: #e6c89d;
+
+    .grid-wrapper {
+      position: relative;
+      outline: 10px solid $c-bg-dark;
+      border-radius: 3px;
+      box-shadow: 0 0 10px 7px $c-highlight;
+      .grid {
+        display: grid;
+        background: $c-outline;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        .cell {
+          background: $c-grid;
+          border: 1px solid $c-outline;
+          text-align: center;
+        }
+      }
+
+      .image-wrapper {
+        transition: transform 300ms ease-in-out;
+
+        .image {
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          pointer-events: none;
+        }
+      }
+    }
+
+    .cell-svg-enter-active,
+    .cell-svg-leave-active {
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .cell-svg-enter-from,
+    .cell-svg-leave-to {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    .cell-svg-enter-to,
+    .cell-svg-leave-from {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }
 </style>

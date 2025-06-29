@@ -21,9 +21,10 @@ const navExpanded = ref(false);
 <style lang="scss" scoped>
 .app-container {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   font-family: "Kodchasan", system-ui, Avenir, Helvetica, Arial, sans-serif;
   background: radial-gradient(
     circle at 30% 30%,
@@ -51,6 +52,12 @@ const navExpanded = ref(false);
     z-index: 0;
     opacity: 0.1;
     transform: translateX(-50%);
+  }
+
+  .content-area {
+    overflow-x: hidden;
+    min-width: 0;
+    position: relative;
   }
 }
 </style>
