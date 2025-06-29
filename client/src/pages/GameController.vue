@@ -98,7 +98,7 @@ import {
 const rootStyles = getComputedStyle(document.documentElement);
 const baseIconColor = rootStyles.getPropertyValue("--c-font-light").trim();
 const iconColor = ref(baseIconColor);
-const iconSize = "100px";
+const iconSize = "70px";
 
 const tiltService = new TiltDetectorService({
   onTilt: (direction, x, y) => {
@@ -111,13 +111,14 @@ const hasGyroStarted = ref(false);
 if (!isGyroSupported.value) {
   error.value = "Gyroscope not supported";
 }
-console.log(tiltService.isSupported());
 
 const controllerType = ref(isGyroSupported.value ? "gyroscope" : "keypad");
 
 async function handleType(type) {
+  console.log("click");
   tiltService.stop();
   hasGyroStarted.value = false;
+  console.log("handleType", type, isGyroSupported.value);
   if (type === "gyroscope") {
     if (!isGyroSupported.value) return;
   }
@@ -192,7 +193,7 @@ let lastUpdate = 0;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      padding: $space-l;
+      padding-top: $space-l;
     }
 
     .controlls {
@@ -252,20 +253,19 @@ let lastUpdate = 0;
         justify-content: center;
         gap: 10px;
         width: 100%;
-        height: 100%;
         margin-top: -$space-xxl * 3;
 
         .arrow-keys {
           display: grid;
-          grid-template-columns: 80px 80px 80px;
-          grid-template-rows: 80px 80px 80px;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: repeat(3, 1fr);
           justify-content: center;
           align-items: center;
           grid-template-areas:
             ". up ."
             "left . right"
             ". down .";
-          gap: 20px;
+          gap: 10px;
           width: fit-content;
           margin: 0 auto;
 
