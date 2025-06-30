@@ -26,6 +26,7 @@
         class="hamburger"
         @clicked="emit('toggle')"
         :color="iconColor"
+        :isOpen="props.expanded"
       />
     </div>
   </nav>
