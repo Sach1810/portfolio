@@ -67,26 +67,20 @@ class TiltDetectorService {
     const now = Date.now();
     if (now - this.lastTrigger < this.cooldown) return;
 
-    let direction = this.lastDirection;
+    let direction;
     if (Math.abs(x) < this.threshold.x && Math.abs(y) < this.threshold.y) {
       direction = null;
-    }
-
-    if (direction !== null) {
-      direction = null;
-      this.lastDirection = direction;
-      this.trigger(direction, x, y);
-      this.lastTrigger = now;
-      return;
-    }
-
-    if (Math.abs(y) > Math.abs(x)) {
+    } else if (Math.abs(y) > Math.abs(x)) {
       direction = y > 0 ? "down" : "up";
     } else {
       direction = x > 0 ? "right" : "left";
     }
 
-    if (direction !== this.lastDirection) {
+    if (direction !== null) {
+      this.lastDirection = direction;
+      this.trigger(direction, x, y);
+      this.lastTrigger = now;
+    } else if (direction !== this.lastDirection) {
       this.lastDirection = direction;
       this.trigger(direction, x, y);
       this.lastTrigger = now;

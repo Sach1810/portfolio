@@ -3,7 +3,10 @@
     <div class="nav-content">
       <div class="logo-area">
         <SachaSvg :animateWink="true" color="#227c9d" class="logo" />
-        <span>S.A.D</span>
+        <div class="title-container">
+          <span class="title">S.A.D</span>
+          <span class="subtitle">It's my initials!</span>
+        </div>
       </div>
 
       <div class="links">
@@ -111,11 +114,21 @@ nav {
       height: $logo-size;
     }
 
-    span {
-      font-size: $font-xl;
-      color: $c-font-light;
-      font-weight: bold;
+    .title-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
       margin-left: -25px;
+
+      .title {
+        font-size: $font-xl;
+        color: $c-font-light;
+        font-weight: bold;
+      }
+
+      .subtitle {
+      }
     }
   }
 
