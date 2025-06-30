@@ -11,11 +11,28 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, nextTick } from "vue";
+import { useRoute } from "vue-router";
 import NavBar from "@/components/nav/NavBar.vue";
 import BackgroundPattern from "@/components/BackgroundPattern.vue";
 
 const navExpanded = ref(false);
+
+const route = useRoute();
+watch(
+  () => route.fullPath,
+  async () => {
+    await nextTick();
+    // Scroll the main container to top
+    const appContainer = document.querySelector(".app-container");
+    if (appContainer) appContainer.scrollTop = 0;
+    // Also scroll .content-area to top
+    const contentArea = document.querySelector(".content-area");
+    if (contentArea) contentArea.scrollTop = 0;
+    // Fallback: scroll window
+    window.scrollTo({ top: 0 });
+  }
+);
 </script>
 
 <style lang="scss" scoped>
