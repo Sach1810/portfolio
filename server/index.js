@@ -13,19 +13,38 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sslOptions = {
-  key: readFileSync(path.join(__dirname, "certs/key.pem")),
-  cert: readFileSync(path.join(__dirname, "certs/cert.pem")),
-};
+const PORT = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === "production";
 
-const server = createServer(sslOptions, app);
-const io = new Server(server, { cors: corsOptions });
+let server;
+let io;
+
+if (isProduction) {
+  // Production: Use HTTP server (for Fly.io and other cloud platforms)
+  const { createServer: createHttpServer } = await import("http");
+  server = createHttpServer(app);
+  io = new Server(server, { cors: corsOptions });
+  
+  server.listen(PORT, () => {
+    console.log(
+      `✅ Server running at http://localhost:${PORT} in ${process.env.NODE_ENV} mode`
+    );
+  });
+} else {
+  // Development: Use HTTPS server with SSL certificates
+  const sslOptions = {
+    key: readFileSync(path.join(__dirname, "certs/key.pem")),
+    cert: readFileSync(path.join(__dirname, "certs/cert.pem")),
+  };
+
+  server = createServer(sslOptions, app);
+  io = new Server(server, { cors: corsOptions });
+  
+  server.listen(PORT, () => {
+    console.log(
+      `✅ Server running at https://localhost:${PORT} in ${process.env.NODE_ENV} mode`
+    );
+  });
+}
 
 initSocket(io);
-
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(
-    `✅ Server running at https://localhost:${PORT} in ${process.env.NODE_ENV} mode`
-  );
-});
