@@ -27,17 +27,23 @@ if (isProduction) {
   console.log("🌍 Starting in production (HTTP)");
 } else {
   // Local development: use HTTPS with self-signed certs
-  const sslOptions = {
-    key: readFileSync(path.join(__dirname, "certs/key.pem")),
-    cert: readFileSync(path.join(__dirname, "certs/cert.pem")),
-  };
-  server = createHttpsServer(sslOptions, app);
-  console.log("🔐 Starting in development (HTTPS)");
+  try {
+    const sslOptions = {
+      key: readFileSync(path.join(__dirname, "certs/key.pem")),
+      cert: readFileSync(path.join(__dirname, "certs/cert.pem")),
+    };
+    server = createHttpsServer(sslOptions, app);
+    console.log("🔐 Starting in development (HTTPS)");
+  } catch (error) {
+    console.warn("⚠️ SSL certificates not found, falling back to HTTP for development");
+    server = createHttpServer(app);
+    console.log("🌍 Starting in development (HTTP fallback)");
+  }
 }
 
 io = new Server(server, { cors: corsOptions });
 initSocket(io);
 
 server.listen(PORT, () => {
-  console.log(`✅ Server listening on ${isProduction ? "http" : "https"}://localhost:${PORT} [${process.env.NODE_ENV}]`);
+  console.log(`✅ Server listening on ${isProduction ? "http" : "https"}://localhost:${PORT} [${process.env.NODE_ENV || "development"}]`);
 });

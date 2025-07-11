@@ -4,7 +4,7 @@
 #
 
 app = 'server-purple-lake-6888'
-primary_region = 'cdg'
+primary_region = 'fra'
 
 [build]
 
@@ -16,7 +16,38 @@ primary_region = 'cdg'
   min_machines_running = 0
   processes = ['app']
 
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/health-check"
+
+[env]
+  NODE_ENV = "production"
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tls_options]]
+    alpn = ["http/1.1", "h2"]
+
+  [[services.http_checks]]
+    path = "/"
+    protocol = "http"
+    interval = 10000
+    timeout = 2000
