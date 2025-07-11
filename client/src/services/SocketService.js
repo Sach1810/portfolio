@@ -2,7 +2,10 @@ import { io } from "socket.io-client";
 
 class SocketService {
   constructor() {
-    const socketUrl = `${window.location.protocol}//${window.location.hostname}:3000`; //TODO port needs to be dynamic as in production mode wont have it
+    // Use SOCKET_URL environment variable, fallback to localhost for development
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || `${window.location.protocol}//${window.location.hostname}:3000`;
+    
+    console.log('SocketService: Connecting to', socketUrl);
     this.socket = io(socketUrl);
     this.connected = false;
     this.socketId = null;

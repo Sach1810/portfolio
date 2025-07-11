@@ -75,7 +75,6 @@
 
 <style lang="scss" scoped>
 .background-pattern {
-  background-image: url("../assets/background-pattern.svg");
   pointer-events: none;
 }
 </style>
