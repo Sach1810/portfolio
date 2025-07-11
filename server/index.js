@@ -1,9 +1,11 @@
-import { createServer } from "https";
-import { Server } from "socket.io";
 import { readFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import { createServer as createHttpsServer } from "https";
+import { createServer as createHttpServer } from "http";
+import { Server } from "socket.io";
+
 import app from "./src/app.js";
 import { corsOptions } from "./config/corsOptions.js";
 import { initSocket } from "./src/socket.js";
@@ -20,31 +22,22 @@ let server;
 let io;
 
 if (isProduction) {
-  // Production: Use HTTP server (for Fly.io and other cloud platforms)
-  const { createServer: createHttpServer } = await import("http");
+  // Fly.io or other cloud env: use HTTP server
   server = createHttpServer(app);
-  io = new Server(server, { cors: corsOptions });
-  
-  server.listen(PORT, () => {
-    console.log(
-      `✅ Server running at http://localhost:${PORT} in ${process.env.NODE_ENV} mode`
-    );
-  });
+  console.log("🌍 Starting in production (HTTP)");
 } else {
-  // Development: Use HTTPS server with SSL certificates
+  // Local development: use HTTPS with self-signed certs
   const sslOptions = {
     key: readFileSync(path.join(__dirname, "certs/key.pem")),
     cert: readFileSync(path.join(__dirname, "certs/cert.pem")),
   };
-
-  server = createServer(sslOptions, app);
-  io = new Server(server, { cors: corsOptions });
-  
-  server.listen(PORT, () => {
-    console.log(
-      `✅ Server running at https://localhost:${PORT} in ${process.env.NODE_ENV} mode`
-    );
-  });
+  server = createHttpsServer(sslOptions, app);
+  console.log("🔐 Starting in development (HTTPS)");
 }
 
+io = new Server(server, { cors: corsOptions });
 initSocket(io);
+
+server.listen(PORT, () => {
+  console.log(`✅ Server listening on ${isProduction ? "http" : "https"}://localhost:${PORT} [${process.env.NODE_ENV}]`);
+});

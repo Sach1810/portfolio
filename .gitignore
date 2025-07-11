@@ -17,3 +17,5 @@ node_modules
 
 .cursor
 memory-bank
+
+certs/*
