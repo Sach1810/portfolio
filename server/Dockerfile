@@ -14,7 +14,7 @@ RUN npm ci --only=production
 COPY . .
 
 # Expose port
-EXPOSE 3000
+EXPOSE 8080
 
 # Set NODE_ENV to production for Fly.io
 ENV NODE_ENV=production
