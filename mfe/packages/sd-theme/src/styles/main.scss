@@ -1,0 +1,37 @@
+// Import theme components in order
+@use "./_fonts.scss" as *;
+@use "./_variables.scss" as *;
+@use "./_theme.scss" as *;
+@use "./_base.scss" as *;
+
+// Export theme for external use
+:export {
+  // Color palette
+  bgDarker: $c-bg-darker;
+  bgDark: $c-bg-dark;
+  bgMid: $c-bg-mid;
+  bgLight: $c-bg-light;
+  highlight: $c-highlight;
+  fontLight: $c-font-light;
+  fontDark: $c-font-dark;
+  
+  // Typography
+  fontXs: $font-xs;
+  fontS: $font-s;
+  fontM: $font-m;
+  fontL: $font-l;
+  fontXl: $font-xl;
+  fontXxl: $font-xxl;
+  fontHeadlineS: $font-headline-s;
+  fontHeadline: $font-headline;
+  
+  // Spacing
+  spaceXs: $space-xs;
+  spaceS: $space-s;
+  spaceM: $space-m;
+  spaceL: $space-l;
+  spaceXl: $space-xl;
+  spaceXxl: $space-xxl;
+  pagePadding: $page-padding;
+  // navClosedWidth: $nav-closed-width;
+} 

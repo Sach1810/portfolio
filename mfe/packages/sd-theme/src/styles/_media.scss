@@ -1,0 +1,20 @@
+@use "sass:map";
+
+// Shared breakpoints across all microfrontends
+$breakpoints: (
+  xs: 480px,
+  sm: 768px,
+  md: 840px,
+  lg: 1024px,
+  xl: 1280px,
+);
+
+// Main responsive mixin
+@mixin respond-to($breakpoint) {
+  $value: map.get($breakpoints, $breakpoint);
+  @if $value {
+    @media (max-width: #{$value}) {
+      @content;
+    }
+  }
+} 

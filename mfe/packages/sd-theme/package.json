@@ -1,0 +1,40 @@
+{
+  "name": "@sacha/sd-theme",
+  "version": "1.0.0",
+  "description": "A modern SCSS theme system with light/dark mode support and live reload capabilities",
+  "type": "module",
+  "main": "dist/sd-theme.css",
+  "style": "dist/sd-theme.css",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite --config vite.config.js",
+    "build": "vite build",
+    "preview": "vite preview",
+    "watch": "vite build --watch",
+    "serve": "vite preview --port 3001",
+    "dev:watch": "vite build --watch --mode development"
+  },
+  "keywords": [
+    "scss",
+    "theme",
+    "css",
+    "design-system",
+    "dark-mode",
+    "light-mode"
+  ],
+  "author": "Sacha David",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.89.2",
+    "vite": "^7.0.4",
+    "vite-plugin-css-injected-by-js": "^3.5.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sachadavid/portfolio.git"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "portfolio-mfe",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:host\" \"npm run dev:react-app\" \"npm run dev:job-search\"",
+    "dev:host": "cd apps/host && npm run dev",
+    "dev:react-app": "cd apps/react-app && npm run dev",
+    "dev:job-search": "cd apps/job-search && npm run dev",
+    "build": "npm run build:host && npm run build:react-app && npm run build:job-search",
+    "build:host": "cd apps/host && npm run build",
+    "build:react-app": "cd apps/react-app && npm run build",
+    "build:job-search": "cd apps/job-search && npm run build",
+    "preview": "cd apps/host && npm run preview"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 
