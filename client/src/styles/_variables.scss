@@ -6,11 +6,15 @@ $c-highlight: #8cfcfc;
 
 $c-font-light: #fff;
 $c-font-dark: #050516;
+$c-bg-dark-overlay-2: rgba(33, 77, 86, 0.8);
 
 // Allows access from js
 :root {
   --c-font-light: #fff;
 }
+
+$font-family-body: 'OpenSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-family-heading: 'Kodchasan', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 $font-xs: 0.5rem;
 $font-s: 0.7rem;
@@ -21,12 +25,20 @@ $font-xxl: 3rem;
 $font-headline-s: 5rem;
 $font-headline: 8rem;
 
+$space-xxs: 2px;
 $space-xs: 5px;
 $space-s: 10px;
 $space-m: 20px;
 $space-l: 30px;
 $space-xl: 40px;
 $space-xxl: 50px;
+
+$radius-s: 5px;
+$radius-m: 10px;
+$radius-l: 20px;
+$radius-xl: 30px;
+$radius-xxl: 40px;
+$radius-full: 50%;
 
 $page-padding: $space-xxl;
 
