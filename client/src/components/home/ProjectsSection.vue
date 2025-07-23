@@ -19,7 +19,7 @@
             <p class="overlay-description">{{ project.description }}</p>
             <div class="tech-wrapper"><span class="tech" v-for="(tech, index) in project.tech" :key="index">{{ tech
             }}</span></div>
-            <button class="overlay-button" @click="project.onClick">{{ project.btnLabel || 'Launch' }}</button>
+            <button v-if="project.onClick" class="overlay-button" @click="project.onClick">{{ project.btnLabel || 'Launch' }}</button>
           </div>
         </div>
       </div>
@@ -34,6 +34,7 @@ import { useRouter } from 'vue-router';
 import InterviewSvg from "../jobsearch/InterviewSvg.vue";
 // import SachaCartoonArmsCrossed from "../SachaCartoonArmsCrossed.vue";
 import { 
+  PhXCircle,
   // PhBank, 
   PhTreeStructure, 
   PhEyeglasses, 
@@ -92,6 +93,16 @@ const projects = [
       router.push('/jobsearch');
     }
   },
+  {
+    title: "Web PD",
+    description: "Camera-driven SDK embedded in client sites for capturing Pupillary Distance in real time.",
+    component: PhArrowsHorizontal,
+    iconColor,
+    tech: ["Vue", "SCSS", "Canvas", "Camera", "Image Optimisation", "device sensors", "indexdb"],
+    onClick: () => {
+      window.open("https://web.glasseson.com/demo/pd/", "_blank");
+    }
+  },
   // { title: 'Target Shooter', description: "A basic game using hand detection to allow the user to shape their fingers like a gun and shoot targets on the screen and reload", component: TargetShooterSvg, tech: ["MediaPipe", "TensorFlow.js", "React", "TypeScript", "Canvas Api", "SCSS", "Vite"] },
   // { title: 'Finance Tracker', description: "A very simple app in which you can upload credit card and bank statements and analyze your spending habits", component: PhBank, iconColor, tech: ["React", "TypeScript", "SCSS", "Vite"] },
   {
@@ -120,16 +131,6 @@ const projects = [
     component: PhBinoculars,
     iconColor,
     tech: ["Microfrontends", "Webpack", "Module Federation", "Vue", "SCSS", ""]
-  },
-  {
-    title: "Web PD",
-    description: "Camera-driven SDK embedded in client sites for capturing Pupillary Distance in real time.",
-    component: PhArrowsHorizontal,
-    iconColor,
-    tech: ["Vue", "SCSS", "Canvas", "Camera", "Image Optimisation", "device sensors", "indexdb"],
-    onClick: () => {
-      window.open("https://web.glasseson.com/demo/pd/", "_blank");
-    }
   },
   {
     title: "Web Companion",
@@ -169,6 +170,12 @@ const setProjectRef = (el, index) => {
 };
 
 const router = useRouter();
+
+const openOverlayIndex = ref(null);
+
+function closeOverlay() {
+  openOverlayIndex.value = null;
+}
 
 onMounted(() => {
   observer = new IntersectionObserver(
@@ -255,6 +262,11 @@ const isMobile = result.platform.type === "mobile";
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      // height: 100dvh;
+      // width: 100dvw;
+      // position: fixed;
+      // top: 0;
+      // left: 0;
 
       .project-overlay {
         opacity: 1;
@@ -358,6 +370,100 @@ const isMobile = result.platform.type === "mobile";
           border-radius: $radius-l;
           padding: $space-xxs $space-xs;
         }
+      }
+    }
+  }
+}
+
+.show-more-btn {
+  margin-top: $space-s;
+  background: $c-bg-light;
+  color: white;
+  border: none;
+  padding: $space-s $space-m;
+  border-radius: $radius-l;
+  font-size: $font-s;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: none;
+  &:active {
+    background: $c-bg-dark;
+  }
+}
+
+.fullscreen-project-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3000;
+  background: $c-bg-dark-overlay-2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+  .overlay-content {
+    position: relative;
+    text-align: center;
+    color: white;
+    padding: $space-m;
+    max-width: 600px;
+    width: 90vw;
+    background: rgba(0,0,0,0.7);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 10;
+      padding: 0;
+    }
+    .overlay-title {
+      font-size: $font-l;
+      font-weight: bold;
+      margin-bottom: $space-s;
+      color: white;
+    }
+    .overlay-description {
+      line-height: 1.4;
+      margin-bottom: $space-m;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: left;
+    }
+    .overlay-button {
+      background: $c-bg-light;
+      color: white;
+      border: none;
+      padding: $space-s $space-m;
+      border-radius: $radius-l;
+      font-size: $font-s;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      outline: none;
+      &:active {
+        background: $c-bg-dark;
+      }
+    }
+    .tech-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $space-s;
+      justify-content: center;
+      margin-bottom: $space-xl;
+      font-size: $font-s;
+      color: $c-font-dark;
+      font-weight: bold;
+      .tech {
+        background-color: $c-highlight;
+        border-radius: $radius-l;
+        padding: $space-xxs $space-xs;
       }
     }
   }

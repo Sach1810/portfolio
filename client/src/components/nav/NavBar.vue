@@ -53,11 +53,11 @@ const navRecords = [
     label: "Home",
     to: "/",
   },
-  {
-    icon: PhInfo,
-    label: "About",
-    to: "/about",
-  },
+  // {
+  //   icon: PhInfo,
+  //   label: "About",
+  //   to: "/about",
+  // },
   {
     icon: PhReadCvLogo,
     label: "CV",
